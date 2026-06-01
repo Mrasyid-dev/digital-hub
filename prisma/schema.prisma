@@ -1,0 +1,50 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Admin {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+}
+
+model Product {
+  id           String   @id @default(uuid())
+  slug         String   @unique
+  title        String
+  description  String
+  category     String   // e.g. "website", "undangan"
+  price        Float
+  demoUrl      String?  // Live preview link
+  thumbnailUrl String   // Cloudinary thumbnail URL
+  images       String[] // Gallery images
+  features     String[] // Core features
+  status       String   @default("draft") // draft | published
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  status    String   @default("pending") // pending | contacted | completed
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id         String   @id @default(uuid())
+  clientName String
+  company    String?
+  rating     Int      @default(5)
+  comment    String
+  avatarUrl  String?
+  createdAt  DateTime @default(now())
+}
