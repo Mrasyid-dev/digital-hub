@@ -30,7 +30,7 @@ export default async function DashboardPage() {
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Metric 1 */}
-        <div className="glass-panel p-6 rounded-xl border border-white/5 flex items-center justify-between">
+        <div className="glass-panel-dark p-6 rounded-xl border border-white/5 flex items-center justify-between">
           <div className="space-y-1">
             <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">Total Produk</span>
             <span className="block text-3xl font-black text-white">{productCount}</span>
@@ -41,7 +41,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Metric 2 */}
-        <div className="glass-panel p-6 rounded-xl border border-white/5 flex items-center justify-between">
+        <div className="glass-panel-dark p-6 rounded-xl border border-white/5 flex items-center justify-between">
           <div className="space-y-1">
             <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">Total Leads (Inbox)</span>
             <span className="block text-3xl font-black text-white">{leadCount}</span>
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Metric 3 */}
-        <div className="glass-panel p-6 rounded-xl border border-white/5 flex items-center justify-between">
+        <div className="glass-panel-dark p-6 rounded-xl border border-white/5 flex items-center justify-between">
           <div className="space-y-1">
             <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">Pending Leads</span>
             <span className={`block text-3xl font-black ${pendingLeadCount > 0 ? "text-amber-400" : "text-white"}`}>
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Metric 4 */}
-        <div className="glass-panel p-6 rounded-xl border border-white/5 flex items-center justify-between">
+        <div className="glass-panel-dark p-6 rounded-xl border border-white/5 flex items-center justify-between">
           <div className="space-y-1">
             <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">Testimoni Klien</span>
             <span className="block text-3xl font-black text-white">{testimonialCount}</span>
@@ -79,7 +79,7 @@ export default async function DashboardPage() {
       {/* Details layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
         {/* Recent leads box */}
-        <div className="lg:col-span-2 glass-panel p-6 rounded-xl border border-white/5 space-y-4">
+        <div className="lg:col-span-2 glass-panel-dark p-6 rounded-xl border border-white/5 space-y-4">
           <h3 className="text-sm font-bold text-white uppercase tracking-wider">Leads Masuk Terbaru</h3>
           
           {recentLeads.length === 0 ? (
@@ -107,7 +107,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Database Notice Box */}
-        <div className="glass-panel p-6 rounded-xl border border-white/5 space-y-4">
+        <div className="glass-panel-dark p-6 rounded-xl border border-white/5 space-y-4">
           <h3 className="text-sm font-bold text-white uppercase tracking-wider">Status Infrastruktur</h3>
           <div className="space-y-3 text-xs text-gray-300">
             <div className="flex items-center justify-between border-b border-white/5 pb-2">

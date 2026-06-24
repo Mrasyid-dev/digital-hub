@@ -79,7 +79,7 @@ export default function LeadsList({ initialLeads }: LeadsListProps) {
       {/* Leads list */}
       <div className="space-y-4">
         {filteredLeads.length === 0 ? (
-          <div className="glass-panel p-12 text-center text-gray-500 text-xs rounded-xl border border-white/5">
+          <div className="glass-panel-dark p-12 text-center text-gray-500 text-xs rounded-xl border border-white/5">
             Tidak ada pesan / leads dalam kategori ini.
           </div>
         ) : (
@@ -88,7 +88,7 @@ export default function LeadsList({ initialLeads }: LeadsListProps) {
             return (
               <div
                 key={lead.id}
-                className={`glass-panel p-6 rounded-xl border transition-colors ${
+                className={`glass-panel-dark p-6 rounded-xl border transition-colors ${
                   lead.status === "pending"
                     ? "border-amber-500/20 bg-amber-500/5 hover:bg-amber-500/10"
                     : lead.status === "completed"

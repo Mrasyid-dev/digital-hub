@@ -236,7 +236,7 @@ export default function ProductForm({ product }: ProductFormProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Side: General Info */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="glass-panel p-6 rounded-xl border border-white/5 space-y-4">
+          <div className="glass-panel-dark p-6 rounded-xl border border-white/5 space-y-4">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">Informasi Umum</h3>
 
             {/* Title */}
@@ -284,7 +284,7 @@ export default function ProductForm({ product }: ProductFormProps) {
           </div>
 
           {/* Features Checklist */}
-          <div className="glass-panel p-6 rounded-xl border border-white/5 space-y-4">
+          <div className="glass-panel-dark p-6 rounded-xl border border-white/5 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">Daftar Fitur Produk *</h3>
               <button
@@ -323,7 +323,7 @@ export default function ProductForm({ product }: ProductFormProps) {
           </div>
 
           {/* Gallery Images */}
-          <div className="glass-panel p-6 rounded-xl border border-white/5 space-y-4">
+          <div className="glass-panel-dark p-6 rounded-xl border border-white/5 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">Gambar Galeri (URL)</h3>
               <button
@@ -376,7 +376,7 @@ export default function ProductForm({ product }: ProductFormProps) {
 
         {/* Right Side: Metadata / Configuration */}
         <div className="space-y-6">
-          <div className="glass-panel p-6 rounded-xl border border-white/5 space-y-4">
+          <div className="glass-panel-dark p-6 rounded-xl border border-white/5 space-y-4">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">Konfigurasi</h3>
 
             {/* Category */}
@@ -438,7 +438,7 @@ export default function ProductForm({ product }: ProductFormProps) {
           </div>
 
           {/* Thumbnail Manager */}
-          <div className="glass-panel p-6 rounded-xl border border-white/5 space-y-4">
+          <div className="glass-panel-dark p-6 rounded-xl border border-white/5 space-y-4">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">Thumbnail Utama *</h3>
 
             {/* Thumbnail Preview */}

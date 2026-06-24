@@ -100,7 +100,7 @@ export default function ProductsList({ initialProducts }: ProductsListProps) {
       </div>
 
       {/* Table container */}
-      <div className="glass-panel rounded-xl border border-white/5 overflow-hidden">
+      <div className="glass-panel-dark rounded-xl border border-white/5 overflow-hidden">
         {filteredProducts.length === 0 ? (
           <div className="p-12 text-center text-gray-500 text-xs">
             Tidak ada produk ditemukan.

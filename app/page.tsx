@@ -1,9 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Code, CheckCircle, Database, Layout } from "lucide-react";
+import { ArrowRight, Sparkles, Code, Clock } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import ProductCard from "@/components/ProductCard";
 import ContactForm from "@/components/ContactForm";
+import AmbientBackground from "@/components/AmbientBackground";
+import ScrollReveal from "@/components/ScrollReveal";
+import WordSearch from "@/components/WordSearch";
 
 export const revalidate = 60; // Revalidate home page data every 60s
 
@@ -15,223 +18,476 @@ export default async function HomePage() {
     orderBy: { createdAt: "desc" },
   });
 
-  // Fetch testimonials
-  const testimonials = await prisma.testimonial.findMany({
-    take: 3,
-    orderBy: { createdAt: "desc" },
-  });
-
   return (
-    <div className="w-full pb-20">
+    <div className="w-full pb-20 bg-[#f9f9fb]">
       {/* 1. Hero Section */}
-      <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-cyan-400">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Showcase Premium Web & Undangan Digital</span>
-          </div>
+      <section className="relative pt-28 pb-24 md:pt-40 md:pb-36 overflow-hidden min-h-[90vh] flex items-center">
+        {/* Animated Custom Ambient Background (Video) */}
+        <AmbientBackground type="hero" />
 
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
-            Ubah Ide Anda Menjadi{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-pink-500 to-cyan-400 bg-clip-text text-transparent glow-text-cyan">
-              Website Premium
-            </span>{" "}
-            Yang Berkelas
-          </h1>
+        {/* Torn Paper Divider at the bottom of Hero */}
+        <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none z-10">
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[40px] text-[#f9f9fb] fill-current">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z" className="opacity-30" fill="#f9f9fb"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,67.5c31.25,16.63,64.75,8.2,101.37,2.24,51.22-8.34,102-38.37,152.09-38.37,52.86,0,85.11,31.79,135.54,42.59C490,85,546,73,612,55.33c77.78-20.85,137.89-29.24,215-9,80.82,21.21,123.14,2.2,173-10.8,55.35-14.49,114.73-30.72,200-1.8V0Z" fill="#f9f9fb"></path>
+          </svg>
+        </div>
 
-          <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Koleksi template undangan digital eksklusif dan landing page bisnis berkinerja tinggi. Kami merancang dengan desain modern, visual memukau, dan optimasi SEO maksimal untuk memajukan bisnis Anda.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <Link
-              href="/website"
-              className="px-6 py-3 rounded-lg bg-gradient-to-r from-violet-600 to-cyan-500 hover:from-violet-500 hover:to-cyan-400 text-white font-bold text-sm shadow-lg shadow-violet-500/20 hover:scale-[1.02] transition-all flex items-center gap-2"
-            >
-              <span>Lihat Demo Template</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/custom"
-              className="px-6 py-3 rounded-lg bg-white/5 hover:bg-white/10 text-white font-bold text-sm transition-all border border-white/10 hover:border-white/20"
-            >
-              Request Custom Web
-            </Link>
-          </div>
-
-          {/* Stats Badges (Glassmorphism layout) */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-16">
-            {[
-              { label: "Project Selesai", val: "50+", desc: "Undangan & Website" },
-              { label: "Kecepatan PageSpeed", val: "A / 100%", desc: "Optimasi Ekstrim" },
-              { label: "Responsive", val: "Semua Device", desc: "Mobile & Tablet" },
-              { label: "Klien Puas", val: "99.9%", desc: "Review Bintang 5" },
-            ].map((stat, idx) => (
-              <div key={idx} className="glass-panel p-4 rounded-xl border border-white/5 text-center">
-                <span className="block text-2xl font-black text-cyan-400 tracking-tight glow-text-cyan">
-                  {stat.val}
-                </span>
-                <span className="block text-xs font-bold text-white mt-1">{stat.label}</span>
-                <span className="block text-[10px] text-gray-500 mt-0.5">{stat.desc}</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-left w-full">
+          <div className="max-w-3xl space-y-6">
+            <ScrollReveal delay={0.1}>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-xs font-bold text-emerald-100 uppercase tracking-widest active-glow">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-200 animate-pulse" />
+                <span>Showcase Portofolio Premium</span>
               </div>
-            ))}
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.2}>
+              <h1 className="text-4xl sm:text-7xl font-black tracking-tight text-white leading-[1.08] font-sans">
+                Ubah Ide Anda Menjadi{" "}
+                <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-sky-100 bg-clip-text text-transparent text-glow-brand select-none">
+                  Website Premium
+                </span>{" "}
+                dengan Sentuhan{" "}
+                <span className="italic font-serif font-light text-sky-200 select-none">Magic</span>
+              </h1>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.3}>
+              <p className="text-sm sm:text-base text-gray-200 max-w-xl leading-relaxed font-sans font-medium">
+                Koleksi template landing page bisnis berkinerja tinggi, portofolio digital premium, dan custom website interaktif yang dioptimalkan untuk kecepatan dan visual memukau.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.4}>
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link
+                  href="/website"
+                  className="px-8 py-3.5 rounded-full bg-gradient-to-r from-emerald-600 to-sky-500 hover:from-emerald-500 hover:to-sky-400 text-white font-black text-sm shadow-[0_4px_20px_rgba(16,185,129,0.25)] hover:shadow-[0_4px_30px_rgba(16,185,129,0.4)] hover:scale-[1.02] transition-all flex items-center gap-2"
+                >
+                  <span>Lihat Demo Template</span>
+                  <ArrowRight className="w-4 h-4 text-white" />
+                </Link>
+                <Link
+                  href="/custom"
+                  className="px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-sm transition-all border border-white/20 hover:scale-[1.02] shadow-lg backdrop-blur-sm"
+                >
+                  Request Custom Web
+                </Link>
+              </div>
+            </ScrollReveal>
+
+            {/* Stats Badges (Glassmorphism layout over video) */}
+            <ScrollReveal delay={0.5}>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-10">
+                {[
+                  { label: "Project Selesai", val: "50+", desc: "Undangan & Website" },
+                  { label: "Kecepatan PageSpeed", val: "A / 100%", desc: "Optimasi Ekstrim" },
+                  { label: "Responsive", val: "Semua Device", desc: "Mobile & Tablet" },
+                  { label: "Klien Puas", val: "99.9%", desc: "Review Bintang 5" },
+                ].map((stat, idx) => (
+                  <div key={idx} className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center">
+                    <span className="block text-xl font-black text-emerald-300 tracking-tight">
+                      {stat.val}
+                    </span>
+                    <span className="block text-xs font-bold text-white mt-1">{stat.label}</span>
+                    <span className="block text-[9px] text-gray-300 mt-0.5">{stat.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* 2. Categories Bento Grid Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center space-y-2 mb-12">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Layanan Utama & Kategori Produk
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto">
-            Solusi digital terlengkap yang dirancang khusus untuk memikat calon konsumen atau tamu undangan Anda.
-          </p>
-        </div>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-[#f9f9fb]">
+        <ScrollReveal delay={0.1}>
+          <div className="text-center space-y-2 mb-16">
+            <h2 className="text-3xl font-black text-gray-800 tracking-tight">
+              Layanan Utama & Kategori Produk
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-500 max-w-xl mx-auto leading-relaxed">
+              Solusi digital terlengkap yang dirancang khusus untuk mempercepat pertumbuhan bisnis dan memperkuat kehadiran online Anda.
+            </p>
+          </div>
+        </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Box 1: Undangan Pernikahan */}
-          <div className="glass-panel neon-border-purple p-8 rounded-2xl flex flex-col justify-between group hover:scale-[1.01] transition-transform duration-300">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center border border-violet-500/20 shadow-md shadow-violet-500/5">
-                <Layout className="w-6 h-6" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[220px]">
+          {/* Card A: Large Feature Box (Website & Landing Page) */}
+          <div className="md:col-span-2 md:row-span-2">
+            <ScrollReveal delay={0.15}>
+              <div className="w-full h-full bg-white border border-gray-100 p-8 rounded-3xl flex flex-col justify-between group hover:shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-500/10 transition-all" />
+                <div className="space-y-4 max-w-md">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-sm">
+                    <Code className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 tracking-tight">Website & Landing Page Premium</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed font-sans font-medium">
+                    Desain landing page bisnis, startup, UMKM, maupun portofolio personal. Dibangun dengan optimasi performa ultra cepat (Lighthouse Score A) dan SEO-friendly.
+                  </p>
+                </div>
+                
+                {/* Floating preview graphics */}
+                <div className="absolute bottom-6 right-6 w-48 h-32 hidden md:block rounded-xl border border-gray-100 bg-gray-50 overflow-hidden p-3 shadow-inner">
+                  <div className="flex items-center gap-1.5 border-b border-gray-200/50 pb-1.5 mb-2">
+                    <div className="w-2 h-2 rounded-full bg-red-400" />
+                    <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                    <div className="w-2 h-2 rounded-full bg-green-400" />
+                  </div>
+                  <div className="text-[10px] font-mono text-gray-500 space-y-1">
+                    <p className="text-emerald-600">const speed = 100;</p>
+                    <p className="text-sky-600">const seo = "A+";</p>
+                    <p className="text-indigo-600">const style = "Premium";</p>
+                  </div>
+                </div>
+
+                <Link
+                  href="/website"
+                  className="mt-8 flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors z-10"
+                >
+                  <span>Jelajahi Template</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
-              <h3 className="text-lg font-bold text-white">Undangan Online (Web)</h3>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Template undangan pernikahan digital premium dengan transisi halaman yang elegan, galeri foto modern, background music, RSVP online, dan kado digital.
-              </p>
-            </div>
-            <Link
-              href="/undangan"
-              className="mt-8 flex items-center gap-1.5 text-xs font-bold text-violet-400 hover:text-white transition-colors"
-            >
-              <span>Jelajahi Template</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            </ScrollReveal>
           </div>
 
-          {/* Box 2: Landing Page & Company Profile */}
-          <div className="glass-panel neon-border p-8 rounded-2xl flex flex-col justify-between group hover:scale-[1.01] transition-transform duration-300">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20 shadow-md shadow-cyan-500/5">
-                <Code className="w-6 h-6" />
+          {/* Card B: Performance Circular Stat */}
+          <div className="md:col-span-1 md:row-span-1">
+            <ScrollReveal delay={0.2}>
+              <div className="w-full h-full bg-white border border-gray-100 p-6 rounded-3xl flex flex-col justify-between group hover:shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+                <div className="flex justify-between items-start">
+                  <h3 className="text-xs font-bold text-gray-800 tracking-tight">Extremely Optimized</h3>
+                  <Sparkles className="w-4 h-4 text-emerald-500" />
+                </div>
+                <div className="flex items-center justify-center py-1">
+                  <div className="relative w-20 h-20 rounded-full border border-emerald-100 flex flex-col items-center justify-center bg-emerald-50/30">
+                    <span className="text-2xl font-black text-gray-800 leading-none">100%</span>
+                    <span className="text-[7px] text-emerald-600 font-bold uppercase tracking-wider mt-1">PageSpeed</span>
+                  </div>
+                </div>
+                <span className="text-[9px] text-gray-400 text-center font-semibold">Score Kecepatan Seluler Maksimal</span>
               </div>
-              <h3 className="text-lg font-bold text-white">Website & Landing Page</h3>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Desain landing page bisnis, startup, UMKM, maupun portofolio personal. Dibangun dengan optimasi performa ultra cepat (Lighthouse Score A) dan SEO-friendly.
-              </p>
-            </div>
-            <Link
-              href="/website"
-              className="mt-8 flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-white transition-colors"
-            >
-              <span>Jelajahi Template</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            </ScrollReveal>
           </div>
 
-          {/* Box 3: Custom Development */}
-          <div className="glass-panel neon-border-cyan p-8 rounded-2xl flex flex-col justify-between group hover:scale-[1.01] transition-transform duration-300">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20 shadow-md shadow-cyan-500/5">
-                <Database className="w-6 h-6" />
+          {/* Card C: Pengerjaan Kilat */}
+          <div className="md:col-span-1 md:row-span-1">
+            <ScrollReveal delay={0.25}>
+              <div className="w-full h-full bg-white border border-gray-100 p-6 rounded-3xl flex flex-col justify-between group hover:shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+                <div className="flex justify-between items-start">
+                  <h3 className="text-xs font-bold text-gray-800 tracking-tight">Pengerjaan Kilat</h3>
+                  <Clock className="w-4 h-4 text-sky-500 animate-pulse" />
+                </div>
+                <div className="flex items-baseline gap-1 py-1">
+                  <span className="text-3xl font-black text-gray-800 tracking-tight">1-3</span>
+                  <span className="text-xs font-bold text-emerald-600 uppercase tracking-wide">Hari Jadi</span>
+                </div>
+                <span className="text-[9px] text-gray-400 font-semibold">Website siap mengudara secara profesional setelah materi dan data lengkap kami terima.</span>
               </div>
-              <h3 className="text-lg font-bold text-white">Layanan Custom</h3>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Butuh fitur khusus? Kami melayani pembuatan website kustom dari nol, sistem manajemen data (CMS), integrasi API pembayaran, dan dashboard admin dinamis.
-              </p>
-            </div>
-            <Link
-              href="/custom"
-              className="mt-8 flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-white transition-colors"
-            >
-              <span>Konsultasi Layanan Custom</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            </ScrollReveal>
+          </div>
+
+          {/* Card D: Large Custom Dev Box */}
+          <div className="md:col-span-3 md:row-span-1">
+            <ScrollReveal delay={0.3}>
+              <div className="w-full h-full bg-white border border-gray-100 p-6 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group hover:shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+                <div className="space-y-2 max-w-xl">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-100 text-[9px] font-bold text-emerald-600 uppercase tracking-wider">
+                    Custom Project
+                  </div>
+                  <h3 className="text-base font-bold text-gray-800">Butuh Web Kustom / Aplikasi Spesifik?</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed font-sans font-medium">
+                    Kami melayani pembuatan website kustom dari nol, sistem manajemen data (CMS), integrasi API pembayaran, dashboard admin dinamis, serta optimasi backend yang andal.
+                  </p>
+                </div>
+                
+                <Link
+                  href="/custom"
+                  className="flex items-center gap-1.5 text-xs font-bold px-6 py-3 rounded-full bg-gray-800 text-white hover:bg-gray-900 transition-all shadow-md hover:scale-[1.02] shrink-0"
+                >
+                  <span>Konsultasi Layanan Custom</span>
+                  <ArrowRight className="w-4 h-4 text-white" />
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* 3. Featured Showcase Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-12">
-          <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-              Highlight Produk & Demo Live
-            </h2>
-            <p className="text-xs sm:text-sm text-gray-400 max-w-xl">
-              Klik salah satu produk untuk menguji coba demo interaktif di dalam *iframe device mockup* secara langsung.
-            </p>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-[#f9f9fb]">
+        <ScrollReveal delay={0.1}>
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-16">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-black text-gray-800 tracking-tight">
+                Highlight Produk & Demo Live
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-500 max-w-xl leading-relaxed">
+                Klik salah satu produk untuk menguji coba demo interaktif di dalam *iframe device mockup* secara langsung.
+              </p>
+            </div>
+            <Link
+              href="/website"
+              className="flex items-center gap-1 text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors shrink-0 border border-emerald-100 bg-emerald-50 px-4 py-2 rounded-full"
+            >
+              <span>Semua Produk</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
-          <Link
-            href="/website"
-            className="flex items-center gap-1 text-xs font-bold text-cyan-400 hover:text-white transition-colors shrink-0"
-          >
-            <span>Semua Produk</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+        </ScrollReveal>
 
         {products.length === 0 ? (
-          <div className="text-center py-20 glass-panel rounded-2xl border border-white/5">
-            <p className="text-sm text-gray-500">Belum ada produk yang dipublikasikan.</p>
-          </div>
+          <ScrollReveal delay={0.2}>
+            <div className="text-center py-20 bg-white border border-gray-100 rounded-3xl">
+              <p className="text-sm text-gray-400 font-semibold">Belum ada produk yang dipublikasikan.</p>
+            </div>
+          </ScrollReveal>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {products.map((product, idx) => (
+              <ScrollReveal key={product.id} delay={0.1 * idx}>
+                <ProductCard product={product} />
+              </ScrollReveal>
             ))}
           </div>
         )}
       </section>
 
-      {/* 4. Testimonials Section (Hidden/Commented Out)
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center space-y-2 mb-12">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Apa Kata Klien Kami?</h2>
-          <p className="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto">
-            Testimoni jujur dari pelaku usaha dan pasangan pengantin yang telah mempercayakan websitenya kepada kami.
-          </p>
+      {/* 4. Interactive Word Search Game Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-[#f9f9fb]">
+        <ScrollReveal delay={0.1}>
+          <div className="text-center space-y-2 mb-16">
+            <h2 className="text-3xl font-black text-gray-800 tracking-tight">
+              Temukan Kata Kunci Layanan Kami
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-500 max-w-xl mx-auto leading-relaxed">
+              Sambil bersantai, coba temukan kata kunci teknologi dan layanan yang kami tawarkan dalam teka-teki kata interaktif di bawah ini!
+            </p>
+          </div>
+        </ScrollReveal>
+        <ScrollReveal delay={0.2}>
+          <WordSearch />
+        </ScrollReveal>
+      </section>
+
+      {/* 4.5 Custom Pricing Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-[#f9f9fb]">
+        <ScrollReveal delay={0.1}>
+          <div className="text-center space-y-3 mb-16">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[10px] font-bold text-emerald-600 border border-emerald-100 uppercase tracking-wider">
+              <Sparkles className="w-3 h-3" />
+              <span>Daftar Harga Transparan</span>
+            </span>
+            <h2 className="text-3xl font-black text-gray-800 tracking-tight">
+              Estimasi Harga Jasa Web Custom
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-500 max-w-xl mx-auto leading-relaxed font-semibold">
+              Temukan kategori website yang sesuai dengan kebutuhan bisnis Anda. Kami menawarkan harga fleksibel dengan spesifikasi berkinerja tinggi.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Landing Page */}
+          <ScrollReveal delay={0.15}>
+            <div className="bg-white border border-gray-100 p-6 rounded-3xl flex flex-col justify-between h-full hover:shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300">
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <h3 className="text-lg font-bold text-gray-800">Landing Page</h3>
+                  <p className="text-[11px] text-gray-400 font-semibold uppercase tracking-wider">Fokus Promosi Produk</p>
+                </div>
+                <div className="text-2xl font-black text-emerald-600 tracking-tight py-2 border-y border-gray-100">
+                  Rp 900rb - 2.5jt
+                </div>
+                <ul className="space-y-2 text-xs text-gray-500 font-medium pt-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>1 Halaman Fokus Utama</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Desain Ultra-Responsive</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Integrasi Direct Chat WA</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Formulir Leads Collection</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Optimasi PageSpeed A+</span>
+                  </li>
+                </ul>
+              </div>
+              <a
+                href="#contact"
+                className="mt-8 w-full py-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-700 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all"
+              >
+                Konsultasikan Project
+              </a>
+            </div>
+          </ScrollReveal>
+
+          {/* Company Profile */}
+          <ScrollReveal delay={0.2}>
+            <div className="bg-white border border-gray-100 p-6 rounded-3xl flex flex-col justify-between h-full hover:shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300">
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <h3 className="text-lg font-bold text-gray-800">Company Profile</h3>
+                  <p className="text-[11px] text-gray-400 font-semibold uppercase tracking-wider">Kredibilitas Bisnis</p>
+                </div>
+                <div className="text-2xl font-black text-emerald-600 tracking-tight py-2 border-y border-gray-100">
+                  Rp 1.8jt - 5jt
+                </div>
+                <ul className="space-y-2 text-xs text-gray-500 font-medium pt-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Struktur Multi-Halaman</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>CMS Artikel & Layanan</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Edit Konten Sendiri</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Google Maps & Social Link</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Basic SEO Setup</span>
+                  </li>
+                </ul>
+              </div>
+              <a
+                href="#contact"
+                className="mt-8 w-full py-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-700 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all"
+              >
+                Konsultasikan Project
+              </a>
+            </div>
+          </ScrollReveal>
+
+          {/* E-Commerce */}
+          <ScrollReveal delay={0.25}>
+            <div className="bg-white border border-gray-100 p-6 rounded-3xl flex flex-col justify-between h-full hover:shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300">
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <h3 className="text-lg font-bold text-gray-800">Toko Online</h3>
+                  <p className="text-[11px] text-gray-400 font-semibold uppercase tracking-wider">Otomatisasi Penjualan</p>
+                </div>
+                <div className="text-2xl font-black text-emerald-600 tracking-tight py-2 border-y border-gray-100">
+                  Rp 3jt - 10jt
+                </div>
+                <ul className="space-y-2 text-xs text-gray-500 font-medium pt-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Sistem Keranjang Belanja</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Katalog & Manajemen Stok</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Hitung Ongkir Otomatis</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Payment Gateway (QRIS)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Halaman Kelola Pesanan</span>
+                  </li>
+                </ul>
+              </div>
+              <a
+                href="#contact"
+                className="mt-8 w-full py-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-700 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all"
+              >
+                Konsultasikan Project
+              </a>
+            </div>
+          </ScrollReveal>
+
+          {/* Custom Web & Backoffice */}
+          <ScrollReveal delay={0.3}>
+            <div className="bg-white border border-gray-100 p-6 rounded-3xl flex flex-col justify-between h-full hover:shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300">
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <h3 className="text-lg font-bold text-gray-800">Sistem & Backoffice</h3>
+                  <p className="text-[11px] text-gray-400 font-semibold uppercase tracking-wider">Aplikasi Operasional</p>
+                </div>
+                <div className="text-2xl font-black text-emerald-600 tracking-tight py-2 border-y border-gray-100">
+                  Mulai Rp 5jt
+                </div>
+                <ul className="space-y-2 text-xs text-gray-500 font-medium pt-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Multi-user & Role Access</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Dashboard Panel Admin</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Custom Logic & Database</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Ekspor Laporan (PDF/Excel)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500">✓</span>
+                    <span>Integrasi API Pihak Ketiga</span>
+                  </li>
+                </ul>
+              </div>
+              <a
+                href="#contact"
+                className="mt-8 w-full py-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-700 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all"
+              >
+                Konsultasikan Project
+              </a>
+            </div>
+          </ScrollReveal>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((testi) => (
-            <div
-              key={testi.id}
-              className="glass-panel p-6 rounded-2xl border border-white/5 relative flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                <div className="flex items-center gap-1 text-amber-400">
-                  {Array.from({ length: testi.rating }).map((_, i) => (
-                    <span key={i} className="text-lg">★</span>
-                  ))}
-                </div>
-                <p className="text-xs text-gray-300 italic leading-relaxed">
-                  &ldquo;{testi.comment}&rdquo;
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/5 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-r from-violet-600 to-cyan-500 flex items-center justify-center text-xs font-bold text-white">
-                  {testi.clientName.charAt(0)}
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-white">{testi.clientName}</h4>
-                  {testi.company && <p className="text-[10px] text-gray-500">{testi.company}</p>}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Educational Disclaimer */}
+        <ScrollReveal delay={0.35}>
+          <div className="mt-12 p-4 bg-gray-50 border border-gray-200 rounded-2xl text-left max-w-4xl mx-auto">
+            <p className="text-[11px] font-semibold text-gray-500 leading-relaxed">
+              <span className="text-emerald-600 font-bold">Catatan Edukasi:</span> Informasi rentang harga dan spesifikasi fitur di atas adalah gambaran umum (*general outline*) untuk membantu estimasi budget awal Anda. Spesifikasi teknis final, modul tambahan, dan biaya akhir akan disesuaikan secara transparan setelah melalui diskusi detail mengenai kebutuhan proyek Anda.
+            </p>
+          </div>
+        </ScrollReveal>
       </section>
-      */}
 
       {/* 5. Contact Section */}
-      <section id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
-        {/* Neon blur decorations */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-cyan-500/5 rounded-full blur-[150px] pointer-events-none" />
+      <section id="contact" className="relative py-28 overflow-hidden min-h-[75vh] flex items-center w-full mt-10">
+        {/* Contact Illustrative Background Image */}
+        <AmbientBackground type="contact" />
 
-        <div className="relative z-10">
+        {/* Torn paper divider at the top of contact section */}
+        <div className="absolute top-0 left-0 right-0 w-full overflow-hidden leading-none z-10 rotate-180">
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[40px] text-[#f9f9fb] fill-current">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z" className="opacity-30" fill="#f9f9fb"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,67.5c31.25,16.63,64.75,8.2,101.37,2.24,51.22-8.34,102-38.37,152.09-38.37,52.86,0,85.11,31.79,135.54,42.59C490,85,546,73,612,55.33c77.78-20.85,137.89-29.24,215-9,80.82,21.21,123.14,2.2,173-10.8,55.35-14.49,114.73-30.72,200-1.8V0Z" fill="#f9f9fb"></path>
+          </svg>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <ContactForm />
         </div>
       </section>

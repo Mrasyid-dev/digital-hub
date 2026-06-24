@@ -46,11 +46,11 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="w-full flex-grow flex items-center justify-center py-20 px-4 relative">
+    <div className="w-full min-h-screen flex items-center justify-center py-20 px-4 relative bg-[#030712] overflow-hidden">
       {/* Decorative Blur */}
-      <div className="absolute w-[300px] h-[300px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute w-[400px] h-[400px] bg-violet-600/5 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="w-full max-w-md glass-panel p-8 rounded-2xl border border-white/10 relative z-10 space-y-6">
+      <div className="w-full max-w-md glass-panel-dark p-8 rounded-2xl border border-white/10 relative z-10 space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-400 mb-2">

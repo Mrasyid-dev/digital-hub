@@ -29,7 +29,7 @@ export default function DashboardLayout({
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-violet-600/5 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Sidebar navigation */}
-      <aside className="w-full md:w-64 glass-panel border-r border-white/5 flex flex-col justify-between shrink-0 relative z-20">
+      <aside className="w-full md:w-64 glass-panel-dark border-r border-white/5 flex flex-col justify-between shrink-0 relative z-20">
         <div>
           {/* Dashboard Header */}
           <div className="p-6 border-b border-white/5 flex items-center gap-2.5">
