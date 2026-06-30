@@ -198,4 +198,77 @@ body {
   100% { opacity: 0.99; }
 }
 
+/* JRPG Dark Theme Overrides */
+.dark-theme {
+  --background: #07030e;
+  --foreground: #f9f9fb;
 
+  /* Overwrite the light theme background in layout sections */
+  .bg-\[\#f9f9fb\] {
+    background-color: #07030e !important;
+  }
+  
+  /* Overwrite svg dividers text color so they merge with the dark background */
+  svg.text-\[\#f9f9fb\], svg[fill="#f9f9fb"] {
+    color: #07030e !important;
+    fill: #07030e !important;
+  }
+  
+  svg path[fill="#f9f9fb"] {
+    fill: #07030e !important;
+  }
+
+  /* Overwrite white cards and containers to JRPG dark boxes */
+  .bg-white {
+    background-color: #0b0518 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Glass panel styles */
+  .glass-panel {
+    background: #0b0518 !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+  }
+
+  /* Overwrite text colors */
+  .text-gray-900, .text-gray-800, .text-slate-900, .text-neutral-800 {
+    color: #ffffff !important;
+  }
+  
+  .text-gray-600, .text-gray-500, .text-slate-600, .text-gray-400 {
+    color: #9ca3af !important;
+  }
+
+  /* Overwrite pixel borders to white */
+  .pixel-border, .border-black, .border-2.border-black, .border-4.border-black {
+    border-color: #ffffff !important;
+  }
+  
+  /* Overwrite shadow colors to white/translucent outline */
+  .shadow-\[4px_4px_0px_0px_rgba\(0\,0\,0\,1\)\] {
+    box-shadow: 4px 4px 0px 0px rgba(255, 255, 255, 0.3) !important;
+  }
+  .shadow-\[6px_6px_0px_0px_rgba\(0\,0\,0\,1\)\] {
+    box-shadow: 6px 6px 0px 0px rgba(255, 255, 255, 0.3) !important;
+  }
+  .shadow-\[8px_8px_0px_0px_rgba\(0\,0\,0\,1\)\] {
+    box-shadow: 8px 8px 0px 0px rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  /* Overwrite inputs in forms to JRPG theme dark inputs */
+  input, textarea, select {
+    background-color: #120924 !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+  }
+}
+
+/* Disable CRT Overlay class */
+.crt-disabled .crt-overlay {
+  display: none !important;
+}
+
+.crt-disabled {
+  animation: none !important;
+}

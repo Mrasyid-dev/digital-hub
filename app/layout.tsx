@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
+import RetroSettings from "@/components/RetroSettings";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-grow flex flex-col">{children}</main>
           <Footer />
+          <RetroSettings />
         </SmoothScroll>
       </body>
     </html>
