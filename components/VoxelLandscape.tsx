@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 interface VoxelLandscapeProps {
-  mode?: "day" | "night";
+  mode?: "day" | "night" | "sunset";
 }
 
 export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
@@ -20,9 +20,9 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
     // 1. Scene setup
     const scene = new THREE.Scene();
     
-    // Ambient Fog: light sky-blue for day, deep purple-black for night
-    const fogColor = mode === "day" ? 0xbce0fd : 0x0c0617;
-    scene.fog = new THREE.FogExp2(fogColor, mode === "day" ? 0.022 : 0.025);
+    // Ambient Fog: light sky-blue for day, deep purple-black for night, dark purple for sunset
+    const fogColor = mode === "day" ? 0xbce0fd : mode === "sunset" ? 0x3e1b5b : 0x0c0617;
+    scene.fog = new THREE.FogExp2(fogColor, mode === "day" ? 0.022 : mode === "sunset" ? 0.024 : 0.025);
 
     // 2. Camera setup
     const camera = new THREE.PerspectiveCamera(
@@ -47,15 +47,29 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
     renderer.shadowMap.type = THREE.PCFShadowMap;
 
     // 4. Lights
-    // Ambient light: bright day sky-blue vs deep night purple
-    const ambientColor = mode === "day" ? 0xd2e9ff : 0x2e1e4c;
-    const ambientIntensity = mode === "day" ? 1.4 : 0.65;
+    // Ambient light: bright day sky-blue vs sunset deep purple vs night indigo
+    let ambientColor = 0x2e1e4c;
+    let ambientIntensity = 0.65;
+    if (mode === "day") {
+      ambientColor = 0xd2e9ff;
+      ambientIntensity = 1.4;
+    } else if (mode === "sunset") {
+      ambientColor = 0x5e216d;
+      ambientIntensity = 1.0;
+    }
     const ambientLight = new THREE.AmbientLight(ambientColor, ambientIntensity);
     scene.add(ambientLight);
 
-    // Sun directional light vs Moon directional light
-    const sunColor = mode === "day" ? 0xfffebb : 0xa5b4fc;
-    const sunIntensity = mode === "day" ? 2.3 : 1.35;
+    // Sun directional light vs Sunset orange light vs Moon directional light
+    let sunColor = 0xa5b4fc;
+    let sunIntensity = 1.35;
+    if (mode === "day") {
+      sunColor = 0xfffebb;
+      sunIntensity = 2.3;
+    } else if (mode === "sunset") {
+      sunColor = 0xff7e00; // deep sunset orange
+      sunIntensity = 2.6;
+    }
     const sunLight = new THREE.DirectionalLight(sunColor, sunIntensity);
     sunLight.position.set(-25, 35, 20);
     sunLight.castShadow = true;
@@ -71,9 +85,19 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
     scene.add(sunLight);
 
     // Hemisphere light for sky reflection gradients
-    const hemiColor = mode === "day" ? 0xbae6fd : 0x1d0f36;
-    const hemiGround = mode === "day" ? 0x3f6212 : 0x051a02;
-    const hemiLight = new THREE.HemisphereLight(hemiColor, hemiGround, mode === "day" ? 1.1 : 0.8);
+    let hemiColor = 0x1d0f36;
+    let hemiGround = 0x051a02;
+    let hemiIntensity = 0.8;
+    if (mode === "day") {
+      hemiColor = 0xbae6fd;
+      hemiGround = 0x3f6212;
+      hemiIntensity = 1.1;
+    } else if (mode === "sunset") {
+      hemiColor = 0xf472b6; // pink sky gradient reflection
+      hemiGround = 0x1d0f36; // dark violet ground
+      hemiIntensity = 0.95;
+    }
+    const hemiLight = new THREE.HemisphereLight(hemiColor, hemiGround, hemiIntensity);
     scene.add(hemiLight);
 
     // 5. Materials
@@ -99,12 +123,12 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
       flowerWhite: new THREE.MeshBasicMaterial({ color: 0xf9fafb }),
       flowerRed: new THREE.MeshBasicMaterial({ color: 0xf87171 }),
       cloud: new THREE.MeshLambertMaterial({
-        color: 0xffffff,
+        color: mode === "day" ? 0xffffff : mode === "sunset" ? 0xffc0e0 : 0xffffff, // pinkish sunset clouds
         transparent: true,
-        opacity: mode === "day" ? 0.92 : 0.45, // clouds are dimmer at night
+        opacity: mode === "day" ? 0.92 : mode === "sunset" ? 0.8 : 0.45,
       }),
-      sun: new THREE.MeshBasicMaterial({ color: mode === "day" ? 0xfef08a : 0xe0f2fe }), // Yellow Sun vs Silver Moon
-      star: new THREE.MeshBasicMaterial({ color: 0xffffff }), // glowing stars (night only)
+      sun: new THREE.MeshBasicMaterial({ color: mode === "day" ? 0xfef08a : mode === "sunset" ? 0xff7e00 : 0xe0f2fe }), // Yellow Sun vs Orange Sunset vs Silver Moon
+      star: new THREE.MeshBasicMaterial({ color: 0xffffff }), // glowing stars (sunset and night)
     };
 
     // 6. Geometry
@@ -149,6 +173,13 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
       return Math.round(height / voxelSize);
     };
 
+    // Define tree parameters outside if-statement for wildflower checks and animation scopes
+    const treeGridX = 10;
+    const treeGridZ = 8;
+    const treeNX = treeGridX * voxelSize;
+    const treeNZ = treeGridZ * voxelSize;
+    const treeYBase = getTerrainHeight(treeNX, treeNZ) * voxelSize;
+
     // Generate Voxel Grid (Surface Shell only for extreme optimization)
     for (let x = -halfSize; x <= halfSize; x++) {
       for (let z = -halfSize; z <= halfSize; z++) {
@@ -161,20 +192,33 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
         const distToPath = Math.abs(nx - pathX);
         let type: keyof typeof materials = "grass";
 
-        if (distToPath < 0.65) {
-          type = "dirt";
-        } else {
-          const shadowBias = (nx > 2.0 && nz > 1.5) ? -0.42 : 0;
-          const val = Math.sin(nx * 1.2) * Math.cos(nz * 1.2) + Math.cos(nx * 0.6) * 0.5 + shadowBias;
+        // Paint both sides of the mountains in sunset mode
+        const isMountainSide = mode === "sunset"
+          ? (nx < -2.2 && nz < -2.2 && gridY >= 10) || (nx > 2.2 && nz > 2.2 && gridY >= 10)
+          : (nx < -2.2 && nz < -2.2 && gridY >= 10);
 
-          if (nx < -2.2 && nz < -2.2 && gridY >= 10) {
-            type = gridY >= 14 ? "stoneHighlight" : "stone";
-          } else if (val > 0.42) {
-            type = "grassHighlight";
-          } else if (val < -0.32) {
-            type = "grassShadow";
+        if (isMountainSide) {
+          type = gridY >= 14 ? "stoneHighlight" : "stone";
+        } else {
+          if (mode === "sunset") {
+            // Paint the entire valley floor with a wide synthwave cyan grid
+            const isGridLine = (Math.abs(x) % 2 === 0 || Math.abs(z) % 2 === 0);
+            type = isGridLine ? "dirt" : "grassDark";
           } else {
-            type = "grass";
+            // Day/Night mode uses path dirt and grass highlights
+            if (distToPath < 0.65) {
+              type = "dirt";
+            } else {
+              const shadowBias = (nx > 2.0 && nz > 1.5) ? -0.42 : 0;
+              const val = Math.sin(nx * 1.2) * Math.cos(nz * 1.2) + Math.cos(nx * 0.6) * 0.5 + shadowBias;
+              if (val > 0.42) {
+                type = "grassHighlight";
+              } else if (val < -0.32) {
+                type = "grassShadow";
+              } else {
+                type = "grass";
+              }
+            }
           }
         }
 
@@ -196,133 +240,131 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
       }
     }
 
-    // Add Path Fence
-    const fencePosts: { x: number; y: number; z: number }[] = [];
-    const fenceZIndices = [22, 14, 6, -2, -10, -18, -26];
-    
-    fenceZIndices.forEach((zIdx) => {
-      const nz = zIdx * voxelSize;
-      const pathX = getPathX(nz);
-      const postX = Math.round((pathX + 0.8) / voxelSize);
-      const postNX = postX * voxelSize;
-      const gridY = getTerrainHeight(postNX, nz);
-      const y = gridY * voxelSize;
+    // Add Path Fence (non-sunset only)
+    if (mode !== "sunset") {
+      const fencePosts: { x: number; y: number; z: number }[] = [];
+      const fenceZIndices = [22, 14, 6, -2, -10, -18, -26];
       
-      for (let ph = 1; ph <= 3; ph++) {
-        voxels.push({ x: postNX, y: y + ph * voxelSize, z: nz, type: "trunk" });
-      }
-      fencePosts.push({ x: postNX, y: y + 3 * voxelSize, z: nz });
-    });
-
-    for (let i = 0; i < fencePosts.length - 1; i++) {
-      const p1 = fencePosts[i];
-      const p2 = fencePosts[i + 1];
-      const zDiff = p2.z - p1.z;
-      const steps = Math.round(Math.abs(zDiff) / voxelSize);
-      
-      for (let step = 1; step < steps; step++) {
-        const t = step / steps;
-        const currZ = p1.z + zDiff * t;
-        const pathX = getPathX(currZ);
-        const rx = Math.round((pathX + 0.8) / voxelSize) * voxelSize;
-        const ry = THREE.MathUtils.lerp(p1.y, p2.y, t) - 0.22;
+      fenceZIndices.forEach((zIdx) => {
+        const nz = zIdx * voxelSize;
+        const pathX = getPathX(nz);
+        const postX = Math.round((pathX + 0.8) / voxelSize);
+        const postNX = postX * voxelSize;
+        const gridY = getTerrainHeight(postNX, nz);
+        const y = gridY * voxelSize;
         
-        voxels.push({
-          x: rx,
-          y: ry,
-          z: currZ,
-          type: "trunk",
-          scale: { x: 0.1, y: 0.12, z: 0.55 }
-        });
-        voxels.push({
-          x: rx,
-          y: ry - voxelSize * 1.1,
-          z: currZ,
-          type: "trunk",
-          scale: { x: 0.1, y: 0.12, z: 0.55 }
-        });
+        for (let ph = 1; ph <= 3; ph++) {
+          voxels.push({ x: postNX, y: y + ph * voxelSize, z: nz, type: "trunk" });
+        }
+        fencePosts.push({ x: postNX, y: y + 3 * voxelSize, z: nz });
+      });
+
+      for (let i = 0; i < fencePosts.length - 1; i++) {
+        const p1 = fencePosts[i];
+        const p2 = fencePosts[i + 1];
+        const zDiff = p2.z - p1.z;
+        const steps = Math.round(Math.abs(zDiff) / voxelSize);
+        
+        for (let step = 1; step < steps; step++) {
+          const t = step / steps;
+          const currZ = p1.z + zDiff * t;
+          const pathX = getPathX(currZ);
+          const rx = Math.round((pathX + 0.8) / voxelSize) * voxelSize;
+          const ry = THREE.MathUtils.lerp(p1.y, p2.y, t) - 0.22;
+          
+          voxels.push({
+            x: rx,
+            y: ry,
+            z: currZ,
+            type: "trunk",
+            scale: { x: 0.1, y: 0.12, z: 0.55 }
+          });
+          voxels.push({
+            x: rx,
+            y: ry - voxelSize * 1.1,
+            z: currZ,
+            type: "trunk",
+            scale: { x: 0.1, y: 0.12, z: 0.55 }
+          });
+        }
       }
     }
 
-    // Add Detailed Oak Tree (Right Side)
-    const treeGridX = 10;
-    const treeGridZ = 8;
-    const treeNX = treeGridX * voxelSize;
-    const treeNZ = treeGridZ * voxelSize;
-    const treeYBase = getTerrainHeight(treeNX, treeNZ) * voxelSize;
-    
-    // Circular Trunk
-    const trunkHeightGrid = 15;
-    const trunkOffsets = [
-      { dx: 0, dz: 0 },
-      { dx: 1, dz: 0 },
-      { dx: -1, dz: 0 },
-      { dx: 0, dz: 1 },
-      { dx: 0, dz: -1 },
-    ];
+    // Add Detailed Oak Tree (Right Side - non-sunset only)
+    if (mode !== "sunset") {
+      // Circular Trunk
+      const trunkHeightGrid = 15;
+      const trunkOffsets = [
+        { dx: 0, dz: 0 },
+        { dx: 1, dz: 0 },
+        { dx: -1, dz: 0 },
+        { dx: 0, dz: 1 },
+        { dx: 0, dz: -1 },
+      ];
 
-    for (let ty = 1; ty <= trunkHeightGrid; ty++) {
-      const y = treeYBase + ty * voxelSize;
-      const activeOffsets = ty > trunkHeightGrid * 0.6 ? [{ dx: 0, dz: 0 }] : trunkOffsets;
-      activeOffsets.forEach((offset) => {
-        voxels.push({
-          x: treeNX + offset.dx * voxelSize,
-          y,
-          z: treeNZ + offset.dz * voxelSize,
-          type: "trunk"
+      for (let ty = 1; ty <= trunkHeightGrid; ty++) {
+        const y = treeYBase + ty * voxelSize;
+        const activeOffsets = ty > trunkHeightGrid * 0.6 ? [{ dx: 0, dz: 0 }] : trunkOffsets;
+        activeOffsets.forEach((offset) => {
+          voxels.push({
+            x: treeNX + offset.dx * voxelSize,
+            y,
+            z: treeNZ + offset.dz * voxelSize,
+            type: "trunk"
+          });
         });
-      });
-    }
+      }
 
-    // Branches
-    const branchGridY1 = treeYBase + 10 * voxelSize;
-    voxels.push({ x: treeNX - voxelSize, y: branchGridY1, z: treeNZ, type: "trunk" });
-    voxels.push({ x: treeNX - voxelSize * 2, y: branchGridY1 + voxelSize, z: treeNZ, type: "trunk" });
-    voxels.push({ x: treeNX - voxelSize * 3, y: branchGridY1 + voxelSize * 2, z: treeNZ, type: "trunk" });
-    voxels.push({ x: treeNX, y: branchGridY1, z: treeNZ - voxelSize, type: "trunk" });
-    voxels.push({ x: treeNX, y: branchGridY1 + voxelSize, z: treeNZ - voxelSize * 2, type: "trunk" });
-    voxels.push({ x: treeNX + voxelSize, y: branchGridY1 + voxelSize * 0.5, z: treeNZ + voxelSize, type: "trunk" });
-    voxels.push({ x: treeNX + voxelSize * 2, y: branchGridY1 + voxelSize * 1.5, z: treeNZ + voxelSize * 2, type: "trunk" });
+      // Branches
+      const branchGridY1 = treeYBase + 10 * voxelSize;
+      voxels.push({ x: treeNX - voxelSize, y: branchGridY1, z: treeNZ, type: "trunk" });
+      voxels.push({ x: treeNX - voxelSize * 2, y: branchGridY1 + voxelSize, z: treeNZ, type: "trunk" });
+      voxels.push({ x: treeNX - voxelSize * 3, y: branchGridY1 + voxelSize * 2, z: treeNZ, type: "trunk" });
+      voxels.push({ x: treeNX, y: branchGridY1, z: treeNZ - voxelSize, type: "trunk" });
+      voxels.push({ x: treeNX, y: branchGridY1 + voxelSize, z: treeNZ - voxelSize * 2, type: "trunk" });
+      voxels.push({ x: treeNX + voxelSize, y: branchGridY1 + voxelSize * 0.5, z: treeNZ + voxelSize, type: "trunk" });
+      voxels.push({ x: treeNX + voxelSize * 2, y: branchGridY1 + voxelSize * 1.5, z: treeNZ + voxelSize * 2, type: "trunk" });
 
-    // Foliage Spheres
-    const leafClusters = [
-      { cx: treeNX - 1.35, cy: treeYBase + 5.0, cz: treeNZ, r: 1.5 },
-      { cx: treeNX + 1.1, cy: treeYBase + 5.2, cz: treeNZ + 0.9, r: 1.5 },
-      { cx: treeNX, cy: treeYBase + 5.8, cz: treeNZ - 1.1, r: 1.8 },
-      { cx: treeNX + 0.5, cy: treeYBase + 6.3, cz: treeNZ + 0.9, r: 1.8 },
-      { cx: treeNX, cy: treeYBase + 7.2, cz: treeNZ, r: 2.3 },
-      { cx: treeNX, cy: treeYBase + 8.5, cz: treeNZ + 0.5, r: 1.4 },
-    ];
+      // Foliage Spheres
+      const leafClusters = [
+        { cx: treeNX - 1.35, cy: treeYBase + 5.0, cz: treeNZ, r: 1.5 },
+        { cx: treeNX + 1.1, cy: treeYBase + 5.2, cz: treeNZ + 0.9, r: 1.5 },
+        { cx: treeNX, cy: treeYBase + 5.8, cz: treeNZ - 1.1, r: 1.8 },
+        { cx: treeNX + 0.5, cy: treeYBase + 6.3, cz: treeNZ + 0.9, r: 1.8 },
+        { cx: treeNX, cy: treeYBase + 7.2, cz: treeNZ, r: 2.3 },
+        { cx: treeNX, cy: treeYBase + 8.5, cz: treeNZ + 0.5, r: 1.4 },
+      ];
 
-    leafClusters.forEach((cluster) => {
-      const { cx, cy, cz, r } = cluster;
-      const gridR = Math.round(r / voxelSize);
-      
-      for (let dx = -gridR; dx <= gridR; dx++) {
-        for (let dy = -gridR; dy <= gridR; dy++) {
-          for (let dz = -gridR; dz <= gridR; dz++) {
-            const vx = cx + dx * voxelSize;
-            const vy = cy + dy * voxelSize;
-            const vz = cz + dz * voxelSize;
-            
-            const distSq = Math.pow(dx * voxelSize, 2) + Math.pow(dy * voxelSize, 2) + Math.pow(dz * voxelSize, 2);
-            if (distSq < r * r) {
-              if (distSq > Math.pow(r - voxelSize, 2) && Math.random() < 0.35) continue;
+      leafClusters.forEach((cluster) => {
+        const { cx, cy, cz, r } = cluster;
+        const gridR = Math.round(r / voxelSize);
+        
+        for (let dx = -gridR; dx <= gridR; dx++) {
+          for (let dy = -gridR; dy <= gridR; dy++) {
+            for (let dz = -gridR; dz <= gridR; dz++) {
+              const vx = cx + dx * voxelSize;
+              const vy = cy + dy * voxelSize;
+              const vz = cz + dz * voxelSize;
               
-              let leafType: keyof typeof materials = "leaf";
-              if (dy * voxelSize > r * 0.3 && Math.random() < 0.7) {
-                leafType = "leafHighlight";
-              } else if (dy * voxelSize < -r * 0.3) {
-                leafType = "leafShadow";
+              const distSq = Math.pow(dx * voxelSize, 2) + Math.pow(dy * voxelSize, 2) + Math.pow(dz * voxelSize, 2);
+              if (distSq < r * r) {
+                if (distSq > Math.pow(r - voxelSize, 2) && Math.random() < 0.35) continue;
+                
+                let leafType: keyof typeof materials = "leaf";
+                if (dy * voxelSize > r * 0.3 && Math.random() < 0.7) {
+                  leafType = "leafHighlight";
+                } else if (dy * voxelSize < -r * 0.3) {
+                  leafType = "leafShadow";
+                }
+                voxels.push({ x: vx, y: vy, z: vz, type: leafType });
               }
-              voxels.push({ x: vx, y: vy, z: vz, type: leafType });
             }
           }
         }
-      }
-    });
+      });
+    }
 
-    // Picnic Blanket & Props
+    // Picnic Blanket & Props (non-sunset only)
     const blanketGridXStart = 5;
     const blanketGridXEnd = 9;
     const blanketGridZStart = 11;
@@ -331,76 +373,141 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
     const blanketNZStart = blanketGridZStart * voxelSize;
     const blanketY = getTerrainHeight(3.1, 5.8) * voxelSize + voxelSize;
 
-    for (let gx = blanketGridXStart; gx <= blanketGridXEnd; gx++) {
-      for (let gz = blanketGridZStart; gz <= blanketGridZEnd; gz++) {
-        const isStripe = (gx + gz) % 2 === 0;
-        voxels.push({
-          x: gx * voxelSize,
-          y: blanketY,
-          z: gz * voxelSize,
-          type: isStripe ? "blanketStripe" : "blanket"
-        });
-      }
-    }
-
-    // Laptop
-    const lx = blanketNXStart + voxelSize;
-    const lz = blanketNZStart + voxelSize * 1.5;
-    for (let dx = 0; dx < 2; dx++) {
-      for (let dz = 0; dz < 3; dz++) {
-        voxels.push({ x: lx + dx * voxelSize, y: blanketY + voxelSize, z: lz + dz * voxelSize, type: "laptop" });
-      }
-    }
-    for (let dx = -1; dx < 3; dx++) {
-      for (let dy = 1; dy <= 3; dy++) {
-        voxels.push({ x: lx + dx * voxelSize, y: blanketY + voxelSize + dy * voxelSize, z: lz - voxelSize, type: "laptopScreen" });
-        voxels.push({ x: lx + dx * voxelSize, y: blanketY + voxelSize + dy * voxelSize, z: lz - voxelSize * 1.05, type: "laptop" });
-      }
-    }
-    voxels.push({ x: lx + voxelSize * 0.5, y: blanketY + voxelSize * 2.0, z: lz - voxelSize * 0.9, type: "codeGlow", scale: { x: 0.6, y: 0.35, z: 0.2 } });
-    voxels.push({ x: lx + voxelSize * 1.5, y: blanketY + voxelSize * 2.5, z: lz - voxelSize * 0.9, type: "codeGlow", scale: { x: 0.45, y: 0.35, z: 0.2 } });
-
-    // Open Book
-    const bx = blanketNXStart + voxelSize * 2.5;
-    const bz = blanketNZStart + voxelSize * 2.0;
-    voxels.push({ x: bx, y: blanketY + voxelSize, z: bz, type: "trunk" });
-    voxels.push({ x: bx, y: blanketY + voxelSize, z: bz + voxelSize, type: "trunk" });
-    voxels.push({ x: bx - voxelSize, y: blanketY + voxelSize, z: bz, type: "blanket" });
-    voxels.push({ x: bx - voxelSize, y: blanketY + voxelSize, z: bz + voxelSize, type: "blanket" });
-    voxels.push({ x: bx + voxelSize, y: blanketY + voxelSize, z: bz, type: "blanket" });
-    voxels.push({ x: bx + voxelSize, y: blanketY + voxelSize, z: bz + voxelSize, type: "blanket" });
-
-    // Inkwell & Quill
-    const ix = blanketNXStart + voxelSize * 0.5;
-    const iz = blanketNZStart + voxelSize * 0.5;
-    voxels.push({ x: ix, y: blanketY + voxelSize, z: iz, type: "laptopScreen" });
-    voxels.push({ x: ix, y: blanketY + voxelSize * 2.0, z: iz, type: "flowerWhite", scale: { x: 0.2, y: 0.6, z: 0.2 } });
-    voxels.push({ x: ix - voxelSize * 0.4, y: blanketY + voxelSize * 3.0, z: iz, type: "flowerWhite", scale: { x: 0.2, y: 0.6, z: 0.2 } });
-
-    // Wildflowers
-    for (let x = -halfSize; x <= halfSize; x++) {
-      for (let z = -halfSize; z <= halfSize; z++) {
-        const nx = x * voxelSize;
-        const nz = z * voxelSize;
-        const gridY = getTerrainHeight(nx, nz);
-        const y = gridY * voxelSize;
-
-        const pathX = getPathX(nz);
-        if (Math.abs(nx - pathX) < 1.3) continue;
-        if (Math.hypot(nx - treeNX, nz - treeNZ) < 2.5) continue;
-        if (nx >= blanketNXStart - voxelSize && nx <= blanketNXStart + 5 * voxelSize &&
-            nz >= blanketNZStart - voxelSize && nz <= blanketNZStart + 5 * voxelSize) continue;
-
-        if (Math.random() < 0.08) {
-          const colors: (keyof typeof materials)[] = ["flowerYellow", "flowerBlue", "flowerWhite", "flowerRed"];
-          const type = colors[Math.floor(Math.random() * colors.length)];
+    if (mode !== "sunset") {
+      for (let gx = blanketGridXStart; gx <= blanketGridXEnd; gx++) {
+        for (let gz = blanketGridZStart; gz <= blanketGridZEnd; gz++) {
+          const isStripe = (gx + gz) % 2 === 0;
           voxels.push({
-            x: nx,
-            y: y + voxelSize * 0.8,
-            z: nz,
-            type,
-            scale: { x: 0.22, y: 0.42, z: 0.22 }
+            x: gx * voxelSize,
+            y: blanketY,
+            z: gz * voxelSize,
+            type: isStripe ? "blanketStripe" : "blanket"
           });
+        }
+      }
+
+      // Laptop
+      const lx = blanketNXStart + voxelSize;
+      const lz = blanketNZStart + voxelSize * 1.5;
+      for (let dx = 0; dx < 2; dx++) {
+        for (let dz = 0; dz < 3; dz++) {
+          voxels.push({ x: lx + dx * voxelSize, y: blanketY + voxelSize, z: lz + dz * voxelSize, type: "laptop" });
+        }
+      }
+      for (let dx = -1; dx < 3; dx++) {
+        for (let dy = 1; dy <= 3; dy++) {
+          voxels.push({ x: lx + dx * voxelSize, y: blanketY + voxelSize + dy * voxelSize, z: lz - voxelSize, type: "laptopScreen" });
+          voxels.push({ x: lx + dx * voxelSize, y: blanketY + voxelSize + dy * voxelSize, z: lz - voxelSize * 1.05, type: "laptop" });
+        }
+      }
+      voxels.push({ x: lx + voxelSize * 0.5, y: blanketY + voxelSize * 2.0, z: lz - voxelSize * 0.9, type: "codeGlow", scale: { x: 0.6, y: 0.35, z: 0.2 } });
+      voxels.push({ x: lx + voxelSize * 1.5, y: blanketY + voxelSize * 2.5, z: lz - voxelSize * 0.9, type: "codeGlow", scale: { x: 0.45, y: 0.35, z: 0.2 } });
+
+      // Open Book
+      const bx = blanketNXStart + voxelSize * 2.5;
+      const bz = blanketNZStart + voxelSize * 2.0;
+      voxels.push({ x: bx, y: blanketY + voxelSize, z: bz, type: "trunk" });
+      voxels.push({ x: bx, y: blanketY + voxelSize, z: bz + voxelSize, type: "trunk" });
+      voxels.push({ x: bx - voxelSize, y: blanketY + voxelSize, z: bz, type: "blanket" });
+      voxels.push({ x: bx - voxelSize, y: blanketY + voxelSize, z: bz + voxelSize, type: "blanket" });
+      voxels.push({ x: bx + voxelSize, y: blanketY + voxelSize, z: bz, type: "blanket" });
+      voxels.push({ x: bx + voxelSize, y: blanketY + voxelSize, z: bz + voxelSize, type: "blanket" });
+
+      // Inkwell & Quill
+      const ix = blanketNXStart + voxelSize * 0.5;
+      const iz = blanketNZStart + voxelSize * 0.5;
+      voxels.push({ x: ix, y: blanketY + voxelSize, z: iz, type: "laptopScreen" });
+      voxels.push({ x: ix, y: blanketY + voxelSize * 2.0, z: iz, type: "flowerWhite", scale: { x: 0.2, y: 0.6, z: 0.2 } });
+      voxels.push({ x: ix - voxelSize * 0.4, y: blanketY + voxelSize * 3.0, z: iz, type: "flowerWhite", scale: { x: 0.2, y: 0.6, z: 0.2 } });
+    }
+
+    // Wildflowers (non-sunset only)
+    if (mode !== "sunset") {
+      for (let x = -halfSize; x <= halfSize; x++) {
+        for (let z = -halfSize; z <= halfSize; z++) {
+          const nx = x * voxelSize;
+          const nz = z * voxelSize;
+          const gridY = getTerrainHeight(nx, nz);
+          const y = gridY * voxelSize;
+
+          const pathX = getPathX(nz);
+          if (Math.abs(nx - pathX) < 1.3) continue;
+          if (Math.hypot(nx - treeNX, nz - treeNZ) < 2.5) continue;
+          if (nx >= blanketNXStart - voxelSize && nx <= blanketNXStart + 5 * voxelSize &&
+              nz >= blanketNZStart - voxelSize && nz <= blanketNZStart + 5 * voxelSize) continue;
+
+          if (Math.random() < 0.08) {
+            const colors: (keyof typeof materials)[] = ["flowerYellow", "flowerBlue", "flowerWhite", "flowerRed"];
+            const type = colors[Math.floor(Math.random() * colors.length)];
+            voxels.push({
+              x: nx,
+              y: y + voxelSize * 0.8,
+              z: nz,
+              type,
+              scale: { x: 0.22, y: 0.42, z: 0.22 }
+            });
+          }
+        }
+      }
+    }
+
+    // Skyscraper generator function (Sunset mode only)
+    if (mode === "sunset") {
+      const spawnSkyscraper = (gridX: number, gridZ: number, widthX: number, widthZ: number, heightVal: number) => {
+        const startX = gridX;
+        const startZ = gridZ;
+        const baseHeight = getTerrainHeight(startX * voxelSize, startZ * voxelSize);
+
+        for (let dx = 0; dx < widthX; dx++) {
+          for (let dz = 0; dz < widthZ; dz++) {
+            const vx = (startX + dx) * voxelSize;
+            const vz = (startZ + dz) * voxelSize;
+            
+            for (let dy = 1; dy <= heightVal; dy++) {
+              const vy = (baseHeight + dy) * voxelSize;
+              
+              // Only draw windows on the outer walls, spaced out
+              const isOuterWall = (dx === 0 || dx === widthX - 1 || dz === 0 || dz === widthZ - 1);
+              const isWindow = isOuterWall && (dy % 4 === 1) && ((dx + dz) % 2 === 1) && (dy < heightVal - 1);
+              
+              let type: keyof typeof materials = "laptopScreen"; // dark charcoal building frame
+              if (isWindow) {
+                type = "codeGlow"; // green neon window lights
+              }
+              
+              voxels.push({ x: vx, y: vy, z: vz, type });
+            }
+          }
+        }
+      };
+
+      // Spawn 3 cyber neon skyscrapers on the right side in the background
+      spawnSkyscraper(12, -4, 6, 6, 32);
+      spawnSkyscraper(18, 2, 7, 5, 42);
+      spawnSkyscraper(14, 8, 5, 6, 26);
+    }
+
+    // Spawn Voxel Sun in the center background (Sunset & Day modes)
+    if (mode === "sunset" || mode === "day") {
+      const sunCenterX = 0;
+      const sunCenterY = mode === "sunset" ? 3.5 : 9.5; // lower sun for sunset!
+      const sunRadius = 4.2; // radius of sun in units
+      
+      const gridR = Math.round(sunRadius / voxelSize);
+      for (let dx = -gridR; dx <= gridR; dx++) {
+        for (let dy = -gridR; dy <= gridR; dy++) {
+          const vx = sunCenterX + dx * voxelSize;
+          const vy = sunCenterY + dy * voxelSize;
+          
+          const distSq = Math.pow(dx * voxelSize, 2) + Math.pow(dy * voxelSize, 2);
+          if (distSq < sunRadius * sunRadius) {
+            voxels.push({
+              x: vx,
+              y: vy,
+              z: -15.8, // just in front of the stars plane
+              type: "sun",
+            });
+          }
         }
       }
     }
@@ -438,9 +545,10 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
       });
     }
 
-    // Night Stars (Glow stars, night mode only)
-    if (mode === "night") {
-      for (let i = 0; i < 40; i++) {
+    // Night Stars (Glow stars, night & sunset modes)
+    if (mode === "night" || mode === "sunset") {
+      const starCount = mode === "night" ? 40 : 15;
+      for (let i = 0; i < starCount; i++) {
         voxels.push({
           x: -22 + Math.random() * 44,
           y: 10 + Math.random() * 5,
@@ -539,7 +647,7 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
     scene.add(particleMesh);
 
     // Initial fireflies/pollen
-    const initialParticlesCount = mode === "day" ? 40 : 65; // more fireflies at night
+    const initialParticlesCount = mode === "day" ? 40 : mode === "sunset" ? 50 : 65; // more fireflies at night
     for (let i = 0; i < initialParticlesCount; i++) {
       particles.push({
         position: new THREE.Vector3(
@@ -552,7 +660,7 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
           (Math.random() - 0.5) * 0.01,
           (Math.random() - 0.5) * 0.015
         ),
-        colorType: Math.random() < (mode === "day" ? 0.6 : 0.8) ? "firefly" : "pollen",
+        colorType: Math.random() < (mode === "day" ? 0.6 : mode === "sunset" ? 0.7 : 0.8) ? "firefly" : "pollen",
         size: 0.5 + Math.random() * 0.5,
         life: Math.random() * 100,
         maxLife: 120 + Math.random() * 200,
@@ -561,8 +669,9 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
 
     // Spawns clicks sparks
     const spawnPetalBurst = (x: number, y: number, z: number) => {
-      // Day = Colorful petals, Night = Magical glowing neon sparks
+      // Day = Colorful petals, Sunset = Warm glow & fireflies, Night = Magical glowing neon sparks
       const typesDay: ("petalYellow" | "petalRed" | "petalBlue")[] = ["petalYellow", "petalRed", "petalBlue"];
+      const typesSunset: ("petalYellow" | "firefly" | "sparkPurple")[] = ["petalYellow", "firefly", "sparkPurple"];
       const typesNight: ("sparkCyan" | "sparkPurple" | "firefly")[] = ["sparkCyan", "sparkPurple", "firefly"];
       
       for (let i = 0; i < 18; i++) {
@@ -578,6 +687,8 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
           ),
           colorType: mode === "day" 
             ? typesDay[Math.floor(Math.random() * typesDay.length)]
+            : mode === "sunset"
+            ? typesSunset[Math.floor(Math.random() * typesSunset.length)]
             : typesNight[Math.floor(Math.random() * typesNight.length)],
           size: 0.6 + Math.random() * 0.6,
           life: 0,
@@ -697,9 +808,8 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
         });
         starMesh.instanceMatrix.needsUpdate = true;
       }
-
-      // Slowly spawn leaves naturally dropping from the big oak tree
-      if (Math.random() < 0.06) {
+      // Slowly spawn leaves naturally dropping from the big oak tree (non-sunset only)
+      if (mode !== "sunset" && Math.random() < 0.06) {
         if (particles.length < maxParticles) {
           particles.push({
             position: new THREE.Vector3(
@@ -839,6 +949,8 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
       style={{
         background: mode === "day"
           ? "linear-gradient(to bottom, #4ea5e9 0%, #7ec2f3 40%, #bae6fd 70%, #dbeafe 100%)"
+          : mode === "sunset"
+          ? "linear-gradient(to bottom, #1d0f36 0%, #3e1b5b 35%, #76226c 65%, #c2417e 90%, #f472b6 100%)"
           : "linear-gradient(to bottom, #07030e 0%, #0d061a 35%, #180b2a 65%, #2a1145 100%)",
       }}
     >
@@ -846,8 +958,14 @@ export default function VoxelLandscape({ mode = "day" }: VoxelLandscapeProps) {
         ref={canvasRef}
         className="w-full h-full block cursor-pointer touch-none pointer-events-auto"
       />
-      {/* Soft color dodge overlay for warm sunbeams / cool moon glow */}
-      <div className="absolute inset-0 pointer-events-none opacity-20 mix-blend-color-dodge bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-amber-100 via-transparent to-transparent" />
+      {/* Soft color dodge overlay for warm sunbeams / sunset glow / cool moon glow */}
+      <div className={`absolute inset-0 pointer-events-none opacity-20 mix-blend-color-dodge bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] ${
+        mode === "day"
+          ? "from-amber-100 via-transparent to-transparent"
+          : mode === "sunset"
+          ? "from-pink-300 via-transparent to-transparent"
+          : "from-indigo-200 via-transparent to-transparent"
+      }`} />
     </div>
   );
 }

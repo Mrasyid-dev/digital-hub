@@ -22,26 +22,26 @@ export default function ShowcaseFrame({ demoUrl, title }: ShowcaseFrameProps) {
   const getWidthClass = () => {
     switch (deviceMode) {
       case "mobile":
-        return "max-w-[375px] border-[12px] border-gray-800 rounded-[36px] shadow-2xl";
+        return "max-w-[375px] border-[16px] border-black rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]";
       case "tablet":
-        return "max-w-[768px] border-[8px] border-gray-800 rounded-[20px] shadow-xl";
+        return "max-w-[768px] border-[12px] border-black rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]";
       case "desktop":
       default:
-        return "w-full border-2 border-white/10 rounded-xl shadow-lg";
+        return "w-full border-4 border-black rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]";
     }
   };
-
+ 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center font-mono">
       {/* Toolbar */}
-      <div className="w-full max-w-5xl bg-black/60 border border-white/10 rounded-2xl px-6 py-3.5 mb-6 flex flex-wrap items-center justify-between gap-4 shadow-2xl backdrop-blur-md">
+      <div className="w-full max-w-5xl bg-[#111] border-4 border-black px-6 py-3.5 mb-6 flex flex-wrap items-center justify-between gap-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] text-white">
         {/* Device Controls */}
-        <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10">
+        <div className="flex items-center gap-1 bg-black p-1 border-2 border-black">
           <button
             onClick={() => setDeviceMode("desktop")}
-            className={`p-2 rounded-lg flex items-center gap-1.5 text-xs font-bold transition-all duration-300 ${
+            className={`p-2 flex items-center gap-1.5 text-[8px] font-pixel transition-all ${
               deviceMode === "desktop"
-                ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/20 scale-[1.02]"
+                ? "bg-emerald-600 text-white border-2 border-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
                 : "text-gray-400 hover:text-white"
             }`}
             title="Desktop Mode"
@@ -51,9 +51,9 @@ export default function ShowcaseFrame({ demoUrl, title }: ShowcaseFrameProps) {
           </button>
           <button
             onClick={() => setDeviceMode("tablet")}
-            className={`p-2 rounded-lg flex items-center gap-1.5 text-xs font-bold transition-all duration-300 ${
+            className={`p-2 flex items-center gap-1.5 text-[8px] font-pixel transition-all ${
               deviceMode === "tablet"
-                ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/20 scale-[1.02]"
+                ? "bg-emerald-600 text-white border-2 border-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
                 : "text-gray-400 hover:text-white"
             }`}
             title="Tablet Mode"
@@ -63,9 +63,9 @@ export default function ShowcaseFrame({ demoUrl, title }: ShowcaseFrameProps) {
           </button>
           <button
             onClick={() => setDeviceMode("mobile")}
-            className={`p-2 rounded-lg flex items-center gap-1.5 text-xs font-bold transition-all duration-300 ${
+            className={`p-2 flex items-center gap-1.5 text-[8px] font-pixel transition-all ${
               deviceMode === "mobile"
-                ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/20 scale-[1.02]"
+                ? "bg-emerald-600 text-white border-2 border-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
                 : "text-gray-400 hover:text-white"
             }`}
             title="Mobile Mode"
@@ -74,17 +74,17 @@ export default function ShowcaseFrame({ demoUrl, title }: ShowcaseFrameProps) {
             <span className="hidden sm:inline">Mobile</span>
           </button>
         </div>
-
+ 
         {/* URL Bar & Actions */}
-        <div className="flex-grow flex items-center max-w-md bg-black/60 border border-white/10 rounded-full px-4 py-2 text-xs text-gray-300 font-mono tracking-wide truncate">
+        <div className="flex-grow flex items-center max-w-md bg-black border-2 border-black px-4 py-2 text-xs text-gray-300 tracking-wide truncate shadow-[inset_2px_2px_4px_rgba(0,0,0,0.8)]">
           <span className="text-cyan-400 mr-1 select-none">https://</span>
           <span className="truncate">{demoUrl.replace(/^https?:\/\//, "")}</span>
         </div>
-
+ 
         <div className="flex items-center gap-2">
           <button
             onClick={handleRefresh}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white border border-white/5 hover:border-white/10 transition-colors"
+            className="p-2 border-2 border-black bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all"
             title="Refresh Demo"
           >
             <RefreshCw className="w-4 h-4" />
@@ -93,7 +93,7 @@ export default function ShowcaseFrame({ demoUrl, title }: ShowcaseFrameProps) {
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2.5 px-4 rounded-full bg-gradient-to-r from-violet-600 to-cyan-500 hover:from-violet-500 hover:to-cyan-400 text-white text-xs font-bold transition-all shadow-lg hover:scale-[1.02] flex items-center gap-1.5"
+            className="p-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white text-[8px] font-pixel border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all flex items-center gap-1.5 uppercase"
             title="Open in new tab"
           >
             <span className="hidden sm:inline">Buka Tab Baru</span>
@@ -101,24 +101,24 @@ export default function ShowcaseFrame({ demoUrl, title }: ShowcaseFrameProps) {
           </a>
         </div>
       </div>
-
+ 
       {/* Frame Container */}
-      <div className="w-full flex justify-center py-4 bg-black/20 rounded-2xl border border-white/5 p-4 relative overflow-hidden">
+      <div className="w-full flex justify-center py-4 bg-[#222] border-4 border-black p-4 relative overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
         {/* Decorative Grid background inside frame viewport */}
         <div className="absolute inset-0 grid-glow-background opacity-20 pointer-events-none" />
-
+ 
         <div
-          className={`w-full h-[580px] overflow-hidden iframe-wrapper bg-white transition-all duration-500 ease-in-out relative ${getWidthClass()}`}
+          className={`w-full h-[580px] overflow-hidden iframe-wrapper bg-white transition-all duration-300 ease-in-out relative ${getWidthClass()}`}
         >
           {deviceMode === "mobile" && (
-            /* Mockup Speaker and Home Button elements */
+            /* Mockup Retro Gameboy-like speaker bezel */
             <>
-              <div className="absolute top-[-10px] left-1/2 transform -translate-x-1/2 w-32 h-4 bg-gray-800 rounded-b-md z-20 flex justify-center items-center">
-                <div className="w-12 h-1 bg-gray-600 rounded-full" />
+              <div className="absolute top-[-14px] left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black z-20 flex justify-center items-center">
+                <div className="w-16 h-1.5 bg-gray-700" />
               </div>
             </>
           )}
-
+ 
           <iframe
             key={iframeKey}
             src={demoUrl}

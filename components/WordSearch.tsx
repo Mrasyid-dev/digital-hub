@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, RotateCcw, Trophy, Sparkles } from "lucide-react";
 
@@ -14,56 +14,56 @@ interface Word {
 const INITIAL_WORDS: Omit<Word, "found">[] = [
   {
     word: "WEBSITE",
-    color: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    color: "bg-emerald-600 text-white border-emerald-800",
     cells: [
       { r: 0, c: 0 }, { r: 0, c: 1 }, { r: 0, c: 2 }, { r: 0, c: 3 }, { r: 0, c: 4 }, { r: 0, c: 5 }, { r: 0, c: 6 }
     ]
   },
   {
     word: "DESIGN",
-    color: "bg-sky-100 text-sky-800 border-sky-300",
+    color: "bg-sky-600 text-white border-sky-800",
     cells: [
       { r: 1, c: 0 }, { r: 2, c: 0 }, { r: 3, c: 0 }, { r: 4, c: 0 }, { r: 5, c: 0 }, { r: 6, c: 0 }
     ]
   },
   {
     word: "DEVELOPER",
-    color: "bg-indigo-100 text-indigo-800 border-indigo-300",
+    color: "bg-indigo-600 text-white border-indigo-800",
     cells: [
       { r: 0, c: 9 }, { r: 1, c: 9 }, { r: 2, c: 9 }, { r: 3, c: 9 }, { r: 4, c: 9 }, { r: 5, c: 9 }, { r: 6, c: 9 }, { r: 7, c: 9 }, { r: 8, c: 9 }
     ]
   },
   {
     word: "PORTFOLIO",
-    color: "bg-amber-100 text-amber-800 border-amber-300",
+    color: "bg-amber-600 text-white border-amber-800",
     cells: [
       { r: 7, c: 0 }, { r: 7, c: 1 }, { r: 7, c: 2 }, { r: 7, c: 3 }, { r: 7, c: 4 }, { r: 7, c: 5 }, { r: 7, c: 6 }, { r: 7, c: 7 }, { r: 7, c: 8 }
     ]
   },
   {
     word: "AGENTS",
-    color: "bg-teal-100 text-teal-800 border-teal-300",
+    color: "bg-teal-600 text-white border-teal-800",
     cells: [
       { r: 4, c: 2 }, { r: 4, c: 3 }, { r: 4, c: 4 }, { r: 4, c: 5 }, { r: 4, c: 6 }, { r: 4, c: 7 }
     ]
   },
   {
     word: "MAGIC",
-    color: "bg-purple-100 text-purple-800 border-purple-300",
+    color: "bg-purple-600 text-white border-purple-800",
     cells: [
       { r: 6, c: 3 }, { r: 6, c: 4 }, { r: 6, c: 5 }, { r: 6, c: 6 }, { r: 6, c: 7 }
     ]
   },
   {
     word: "PREMIUM",
-    color: "bg-rose-100 text-rose-800 border-rose-300",
+    color: "bg-rose-600 text-white border-rose-800",
     cells: [
       { r: 8, c: 0 }, { r: 8, c: 1 }, { r: 8, c: 2 }, { r: 8, c: 3 }, { r: 8, c: 4 }, { r: 8, c: 5 }, { r: 8, c: 6 }
     ]
   },
   {
     word: "DIGITALHUB",
-    color: "bg-fuchsia-100 text-fuchsia-800 border-fuchsia-300",
+    color: "bg-fuchsia-600 text-white border-fuchsia-800",
     cells: [
       { r: 9, c: 0 }, { r: 9, c: 1 }, { r: 9, c: 2 }, { r: 9, c: 3 }, { r: 9, c: 4 }, { r: 9, c: 5 }, { r: 9, c: 6 }, { r: 9, c: 7 }, { r: 9, c: 8 }, { r: 9, c: 9 }
     ]
@@ -84,23 +84,15 @@ const GRID = [
 ];
 
 export default function WordSearch() {
-  const [words, setWords] = useState<Word[]>([]);
+  const [words, setWords] = useState<Word[]>(() => INITIAL_WORDS.map((w) => ({ ...w, found: false })));
   const [startCell, setStartCell] = useState<{ r: number; c: number } | null>(null);
   const [selectedCells, setSelectedCells] = useState<{ r: number; c: number }[]>([]);
-  const [message, setMessage] = useState<string | null>(null);
-  const [showConfetti, setShowConfetti] = useState(false);
-
-  // Initialize words state
-  useEffect(() => {
-    resetGame();
-  }, []);
-
+  const [message, setMessage] = useState<string | null>("HUBUNGKAN HURUF AWAL DAN AKHIR!");
   const resetGame = () => {
     setWords(INITIAL_WORDS.map((w) => ({ ...w, found: false })));
     setStartCell(null);
     setSelectedCells([]);
-    setMessage("Cari kata dalam tabel! Hubungkan huruf awal dan akhir.");
-    setShowConfetti(false);
+    setMessage("HUBUNGKAN HURUF AWAL DAN AKHIR!");
   };
 
   const getCellsBetween = (
@@ -141,7 +133,7 @@ export default function WordSearch() {
       // First click: select starting cell
       setStartCell({ r, c });
       setSelectedCells([{ r, c }]);
-      setMessage("Pilih huruf akhir untuk menghubungkan kata...");
+      setMessage("PILIH HURUF AKHIR UNTUK MENGHUBUNGKAN...");
     } else {
       // Second click: connect line
       const cells = getCellsBetween(startCell, { r, c });
@@ -150,7 +142,7 @@ export default function WordSearch() {
         // Invalid path
         setStartCell({ r, c });
         setSelectedCells([{ r, c }]);
-        setMessage("Garis tidak valid! Silakan pilih huruf awal yang baru.");
+        setMessage("GARIS TIDAK VALID! PILIH HURUF AWAL BARU.");
         return;
       }
 
@@ -170,17 +162,16 @@ export default function WordSearch() {
         const updatedWords = [...words];
         updatedWords[foundWordIdx].found = true;
         setWords(updatedWords);
-        setMessage(`🎉 Hebat! Anda menemukan kata: "${updatedWords[foundWordIdx].word}"`);
+        setMessage(`🎉 BERHASIL MENEMUKAN: "${updatedWords[foundWordIdx].word}"`);
 
         // Check if all found
         const allFound = updatedWords.every((w) => w.found);
         if (allFound) {
-          setShowConfetti(true);
-          setMessage("🏆 Selamat! Semua kata telah ditemukan!");
+          setMessage("🏆 LUAR BIASA! SEMUA KATA DITEMUKAN!");
         }
       } else {
         // Incorrect word
-        setMessage(`❌ "${spelled}" bukan kata yang dicari.`);
+        setMessage(`❌ "${spelled}" BUKAN KATA YANG DICARI.`);
       }
 
       // Reset selection
@@ -207,62 +198,57 @@ export default function WordSearch() {
     let foundWordColor = "";
     for (const w of words) {
       if (w.found && w.cells.some((cell) => cell.r === r && cell.c === c)) {
-        foundWordColor = w.color.split(" ")[0] + " font-black border-emerald-200 text-emerald-800 scale-95";
+        foundWordColor = w.color + " font-bold border-2 scale-95 opacity-80";
         break;
       }
     }
 
     if (isSelected) {
-      return "bg-emerald-500 text-white font-extrabold scale-105 border-emerald-600 shadow-md";
+      return "bg-[#0ea5e9] text-white font-extrabold border-2 border-black";
     }
 
     if (foundWordColor) {
       return foundWordColor;
     }
 
-    return "bg-gray-50 text-gray-700 hover:bg-gray-100 border-gray-100 hover:scale-105";
+    return "bg-[#222] text-gray-300 hover:bg-[#333] border-2 border-black";
   };
 
   const allWordsFound = words.length > 0 && words.every((w) => w.found);
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-3xl border border-gray-100 p-6 md:p-10 shadow-[0_15px_40px_rgba(0,0,0,0.04)] relative overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto bg-white p-6 md:p-10 pixel-border relative overflow-hidden">
       
-      {/* Decorative nature background lines */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
-
       {/* Completion Screen */}
       <AnimatePresence>
         {allWordsFound && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center p-8 text-center space-y-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/95 z-20 flex flex-col items-center justify-center p-8 text-center space-y-6"
           >
             <motion.div
               initial={{ scale: 0 }}
-              animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center border border-emerald-200 text-emerald-600 shadow-lg"
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="w-20 h-20 bg-emerald-950 border-4 border-emerald-400 text-emerald-400 flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
             >
               <Trophy className="w-10 h-10" />
             </motion.div>
 
-            <div className="space-y-2">
-              <h3 className="text-2xl md:text-3xl font-black text-gray-800 tracking-tight flex items-center justify-center gap-2">
-                <Sparkles className="w-6 h-6 text-emerald-500 animate-pulse" />
-                <span>Pekerjaan Selesai!</span>
+            <div className="space-y-3 font-pixel">
+              <h3 className="text-xl md:text-2xl font-bold text-emerald-400 tracking-wider flex items-center justify-center gap-2 animate-bounce">
+                &gt; STAGE CLEAR!
               </h3>
-              <p className="text-sm text-gray-500 max-w-md mx-auto">
+              <p className="text-[10px] text-gray-300 max-w-md mx-auto leading-relaxed uppercase">
                 Anda berhasil menemukan semua kata kunci layanan Digital Hub. Kami siap membantu merealisasikan proyek digital Anda berikutnya!
               </p>
             </div>
 
             <button
               onClick={resetGame}
-              className="px-6 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all flex items-center gap-2"
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-pixel text-[10px] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all uppercase flex items-center gap-2"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Main Lagi</span>
@@ -274,14 +260,14 @@ export default function WordSearch() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left Side: Game Grid */}
         <div className="lg:col-span-7 flex flex-col items-center">
-          <div className="w-full max-w-[360px] md:max-w-[400px] aspect-square bg-gray-100/50 p-2 rounded-2xl border border-gray-100 grid grid-cols-10 grid-rows-10 gap-1 md:gap-1.5 shadow-inner">
+          <div className="w-full max-w-[360px] md:max-w-[400px] aspect-square bg-[#000] p-2 border-4 border-black grid grid-cols-10 grid-rows-10 gap-1 md:gap-1.5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
             {GRID.map((row, rIdx) =>
               row.map((letter, cIdx) => (
                 <button
                   key={`${rIdx}-${cIdx}`}
                   onClick={() => handleCellClick(rIdx, cIdx)}
                   onMouseEnter={() => handleCellHover(rIdx, cIdx)}
-                  className={`aspect-square rounded-lg flex items-center justify-center text-xs md:text-sm font-bold border transition-all duration-200 wordsearch-grid-cell ${getCellClassName(
+                  className={`aspect-square flex items-center justify-center text-xs md:text-sm font-bold transition-all duration-100 wordsearch-grid-cell ${getCellClassName(
                     rIdx,
                     cIdx
                   )}`}
@@ -296,15 +282,15 @@ export default function WordSearch() {
         {/* Right Side: Game Info & Words List */}
         <div className="lg:col-span-5 space-y-6">
           <div className="space-y-2 text-center lg:text-left">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[10px] font-bold text-emerald-600 border border-emerald-100 uppercase tracking-wider">
-              <Sparkles className="w-3 h-3" />
-              <span>Mini Game Interaktif</span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-black bg-emerald-50 text-[9px] font-bold text-emerald-600 uppercase tracking-wider font-pixel shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <Sparkles className="w-3 h-3 animate-pulse" />
+              <span>MINI GAME</span>
             </span>
-            <h3 className="text-xl font-black text-gray-800 tracking-tight leading-none">
+            <h3 className="text-xl font-bold text-gray-800 tracking-tight leading-none font-title pt-2">
               Cari Layanan Kami
             </h3>
-            <div className="p-3 bg-gray-55 rounded-xl border border-gray-100 text-left min-h-[50px] flex items-center">
-              <p className="text-[11px] font-semibold text-gray-500 leading-normal">
+            <div className="p-3 bg-gray-100 border-2 border-black text-left min-h-[50px] flex items-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] font-mono">
+              <p className="text-[11px] font-bold text-gray-600 leading-normal uppercase">
                 {message}
               </p>
             </div>
@@ -317,10 +303,10 @@ export default function WordSearch() {
                 key={idx}
                 animate={w.found ? { scale: [1, 1.05, 1] } : {}}
                 transition={{ duration: 0.3 }}
-                className={`px-3 py-2.5 rounded-xl border flex items-center justify-between text-[11px] font-bold transition-all ${
+                className={`px-3 py-2.5 border-2 border-black flex items-center justify-between text-[8px] font-pixel transition-all ${
                   w.found
-                    ? "bg-emerald-50 text-emerald-700 border-emerald-100 shadow-sm"
-                    : "bg-white text-gray-600 border-gray-100"
+                    ? "bg-emerald-50 text-emerald-700 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
+                    : "bg-white text-gray-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                 }`}
               >
                 <span className={w.found ? "line-through opacity-60" : ""}>
@@ -329,7 +315,7 @@ export default function WordSearch() {
                 {w.found ? (
                   <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 ) : (
-                  <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+                  <div className="w-1.5 h-1.5 bg-gray-300 border border-black" />
                 )}
               </motion.div>
             ))}
@@ -339,7 +325,7 @@ export default function WordSearch() {
           <div className="flex justify-center lg:justify-start">
             <button
               onClick={resetGame}
-              className="text-[10px] font-bold text-gray-400 hover:text-gray-600 flex items-center gap-1 transition-colors"
+              className="text-[8px] font-pixel text-gray-400 hover:text-gray-900 flex items-center gap-1 transition-colors uppercase"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Reset Game</span>

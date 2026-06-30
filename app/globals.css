@@ -1,10 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Silkscreen:wght@400;700&family=VT323&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Outfit', var(--font-geist-sans), sans-serif;
-  --font-serif: 'Playfair Display', serif;
-  --font-mono: var(--font-geist-mono);
+  --font-sans: 'Share Tech Mono', var(--font-geist-mono), monospace;
+  --font-serif: 'VT323', serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-title: 'Silkscreen', monospace;
   --spacing: 0.25rem;
 
   --color-brand-primary: #10b981;
@@ -14,9 +16,9 @@
   --color-neutral-light: #f9f9fb;
   --color-neutral-cream: #fafaf6;
 
-  --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-soft-md: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
-  --shadow-soft-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.08);
+  --shadow-soft-sm: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-soft-md: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-soft-lg: 8px 8px 0px 0px rgba(0, 0, 0, 1);
 }
 
 :root {
@@ -28,114 +30,172 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans), monospace;
   min-height: 100vh;
 }
 
-/* Scrollbar Customization */
+/* Retro Pixelated Scrollbar Customization */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f5;
+  background: #111;
+  border-left: 4px solid #000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 5px;
-  border: 2px solid #f1f1f5;
+  background: #333;
+  border: 2px solid #000;
+  box-shadow: inset -2px -2px 0px #111, inset 2px 2px 0px #555;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: #555;
 }
 
-/* Glassmorphism panel utility adapted for Light Theme */
+/* Pixel Borders & Shadows */
+.pixel-border-sm {
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.pixel-border {
+  border: 4px solid #000;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.pixel-border-emerald {
+  border: 4px solid #10b981;
+  box-shadow: 4px 4px 0px 0px rgba(16, 185, 129, 0.4);
+}
+
+.pixel-border-sky {
+  border: 4px solid #0ea5e9;
+  box-shadow: 4px 4px 0px 0px rgba(14, 165, 233, 0.4);
+}
+
+.pixel-border-interactive {
+  border: 4px solid #000;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  transition: all 0.1s steps(2, end);
+}
+
+.pixel-border-interactive:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.pixel-border-interactive:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+}
+
+/* JRPG dialogue box style */
+.retro-dialog {
+  background: #0b0518;
+  border: 4px solid #fff;
+  outline: 4px solid #000;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+}
+
+/* Glassmorphism panel utility adapted for Light Theme (Refactored to flat pixel card) */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: var(--shadow-soft-md);
+  background: #ffffff;
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .glass-panel-hover {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.15s steps(2, end);
 }
 
 .glass-panel-hover:hover {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(16, 185, 129, 0.2);
-  box-shadow: var(--shadow-soft-lg);
-  transform: translateY(-4px);
+  background: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+}
+
+/* Glassmorphism panel utility adapted for Dark Theme (Refactored to flat pixel card dark) */
+.glass-panel-dark {
+  background: #0b0518;
+  border: 3px solid #fff;
+  outline: 3px solid #000;
+  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.glass-panel-dark-hover {
+  transition: all 0.15s steps(2, end);
+}
+
+.glass-panel-dark-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 1);
 }
 
 /* Active Indicator */
 .active-glow {
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 0 3px #10b981;
 }
 
 /* Custom device framing styles for light theme */
 .iframe-wrapper {
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.12);
+  border: 6px solid #000;
+  box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
 }
 
 /* Word Search Styles */
 .wordsearch-grid-cell {
   user-select: none;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  image-rendering: pixelated;
 }
 
 .wordsearch-grid-cell.selected {
-  background-color: rgba(56, 189, 248, 0.2);
-  color: #0369a1;
+  background-color: #0ea5e9;
+  color: #fff;
   font-weight: 800;
-  transform: scale(1.05);
 }
 
 .wordsearch-grid-cell.found {
-  background-color: rgba(34, 197, 94, 0.2);
-  color: #15803d;
+  background-color: #10b981;
+  color: #fff;
   font-weight: 800;
-  animation: pulse-green 0.5s ease-out;
+  animation: pulse-green 0.3s steps(2, end);
 }
 
 @keyframes pulse-green {
   0% { transform: scale(1); }
-  50% { transform: scale(1.15); box-shadow: 0 0 15px rgba(34, 197, 94, 0.4); }
+  50% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
 
 /* Text glow adjustments for light theme */
 .text-glow-brand {
-  text-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+  text-shadow: 3px 3px 0px #000;
 }
 
-/* Torn paper edge custom shapes for backgrounds */
-.torn-edge-mask {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z' fill='%23fff'/%3E%3C/svg%3E");
-  mask-size: 100% 100%;
+/* CRT Scanline and Screen Flicker Simulation */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.15) 50%
+  );
+  background-size: 100% 4px;
+  opacity: 0.3;
 }
 
-/* Glassmorphism panel utility adapted for Dark Theme (Admin Panel) */
-.glass-panel-dark {
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+.crt-flicker {
+  animation: crt-flicker-anim 0.2s infinite;
 }
 
-.glass-panel-dark-hover {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+@keyframes crt-flicker-anim {
+  0% { opacity: 0.99; }
+  50% { opacity: 1; }
+  100% { opacity: 0.99; }
 }
 
-.glass-panel-dark-hover:hover {
-  background: rgba(17, 24, 39, 0.85);
-  border-color: rgba(6, 182, 212, 0.3);
-  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.5);
-  transform: translateY(-2px);
-}
 

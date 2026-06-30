@@ -49,17 +49,17 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-[#0b0518]/60 border border-emerald-500/20 p-8 rounded-3xl text-center space-y-4 max-w-lg mx-auto shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-950/40 text-emerald-400 border border-emerald-500/30 mb-2 shadow-inner">
+      <div className="retro-dialog p-8 text-center space-y-6 max-w-lg mx-auto font-mono text-white">
+        <div className="inline-flex items-center justify-center w-16 h-16 border-4 border-emerald-400 bg-emerald-950/40 text-emerald-400 mb-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
           <CheckCircle2 className="w-8 h-8" />
         </div>
-        <h3 className="text-xl font-bold text-white">Pesan Terkirim!</h3>
-        <p className="text-sm text-gray-300 leading-relaxed">
+        <h3 className="text-lg font-pixel text-emerald-400 uppercase tracking-wider">&gt; QUEST COMPLETED</h3>
+        <p className="text-xs text-gray-300 leading-relaxed uppercase">
           Terima kasih telah menghubungi kami. Kami akan meninjau pesan Anda dan segera menghubungi Anda kembali melalui WhatsApp atau Email.
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-4 px-6 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 to-sky-500 hover:from-emerald-500 hover:to-sky-400 text-white font-bold text-xs transition-all shadow-md shadow-emerald-500/15"
+          className="mt-4 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-pixel text-[9px] border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all uppercase"
         >
           Kirim Pesan Baru
         </button>
@@ -68,18 +68,18 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#0b0518]/65 p-8 rounded-3xl border border-white/10 space-y-6 max-w-xl mx-auto shadow-[0_20px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+    <form onSubmit={handleSubmit} className="retro-dialog p-8 space-y-6 max-w-xl mx-auto font-mono text-white">
       <div className="space-y-2">
-        <h3 className="text-xl font-black text-white tracking-tight">
+        <h3 className="text-lg font-bold text-white tracking-tight font-title">
           Mulai Project Anda
         </h3>
-        <p className="text-xs text-gray-300 leading-relaxed font-semibold">
+        <p className="text-xs text-gray-400 leading-relaxed">
           Diskusikan kebutuhan website Anda, kami akan memberikan estimasi pengerjaan dan solusi terbaik.
         </p>
       </div>
 
       {status === "error" && (
-        <div className="flex items-center gap-3 p-4 rounded-xl bg-red-950/30 border border-red-500/30 text-red-200 text-xs font-semibold">
+        <div className="flex items-center gap-3 p-4 border-2 border-red-500 bg-red-950/30 text-red-200 text-xs font-bold font-mono">
           <AlertTriangle className="w-5 h-5 shrink-0 text-red-400" />
           <span>{errorMessage}</span>
         </div>
@@ -87,7 +87,7 @@ export default function ContactForm() {
 
       {/* Input Name */}
       <div className="space-y-1.5">
-        <label className="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+        <label className="text-[10px] font-pixel text-gray-300 flex items-center gap-1.5 uppercase">
           <User className="w-3.5 h-3.5 text-emerald-400" />
           <span>Nama Lengkap <span className="text-red-500">*</span></span>
         </label>
@@ -99,14 +99,14 @@ export default function ContactForm() {
           required
           disabled={status === "loading"}
           placeholder="Masukkan nama Anda..."
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/50 transition-all duration-200"
+          className="w-full bg-[#111] border-2 border-white/20 rounded-none px-4 py-2.5 text-sm text-white placeholder-white/35 focus:outline-none focus:bg-black focus:border-emerald-400 transition-all font-mono"
         />
       </div>
 
       {/* Email & Phone grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+          <label className="text-[10px] font-pixel text-gray-300 flex items-center gap-1.5 uppercase">
             <Mail className="w-3.5 h-3.5 text-sky-400" />
             <span>Email <span className="text-red-500">*</span></span>
           </label>
@@ -118,11 +118,11 @@ export default function ContactForm() {
             required
             disabled={status === "loading"}
             placeholder="nama@email.com"
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/50 transition-all duration-200"
+            className="w-full bg-[#111] border-2 border-white/20 rounded-none px-4 py-2.5 text-sm text-white placeholder-white/35 focus:outline-none focus:bg-black focus:border-emerald-400 transition-all font-mono"
           />
         </div>
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+          <label className="text-[10px] font-pixel text-gray-300 flex items-center gap-1.5 uppercase">
             <Phone className="w-3.5 h-3.5 text-emerald-400" />
             <span>Nomor WhatsApp</span>
           </label>
@@ -133,14 +133,14 @@ export default function ContactForm() {
             onChange={handleChange}
             disabled={status === "loading"}
             placeholder="081234xxxx"
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/50 transition-all duration-200"
+            className="w-full bg-[#111] border-2 border-white/20 rounded-none px-4 py-2.5 text-sm text-white placeholder-white/35 focus:outline-none focus:bg-black focus:border-emerald-400 transition-all font-mono"
           />
         </div>
       </div>
 
       {/* Message */}
       <div className="space-y-1.5">
-        <label className="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+        <label className="text-[10px] font-pixel text-gray-300 flex items-center gap-1.5 uppercase">
           <MessageSquare className="w-3.5 h-3.5 text-sky-400" />
           <span>Detail Kebutuhan Project <span className="text-red-500">*</span></span>
         </label>
@@ -152,7 +152,7 @@ export default function ContactForm() {
           required
           disabled={status === "loading"}
           placeholder="Jelaskan fitur-fitur website yang Anda inginkan, budget, atau timeline pengerjaan..."
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/50 transition-all duration-200 resize-none"
+          className="w-full bg-[#111] border-2 border-white/20 rounded-none px-4 py-2.5 text-sm text-white placeholder-white/35 focus:outline-none focus:bg-black focus:border-emerald-400 transition-all font-mono resize-none"
         />
       </div>
 
@@ -160,13 +160,13 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-sky-500 hover:from-emerald-500 hover:to-sky-400 text-white font-bold text-sm shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-pixel text-[10px] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all uppercase disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === "loading" ? (
-          <span>Mengirim...</span>
+          <span>MENGIRIM...</span>
         ) : (
           <>
-            <span>Kirim Request Project</span>
+            <span>KIRIM REQUEST</span>
             <Send className="w-4 h-4" />
           </>
         )}
