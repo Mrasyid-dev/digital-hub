@@ -49,12 +49,12 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-white border border-gray-100 p-8 rounded-3xl text-center space-y-4 max-w-lg mx-auto shadow-[0_15px_40px_rgba(0,0,0,0.05)]">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 mb-2 shadow-inner">
+      <div className="bg-[#0b0518]/60 border border-emerald-500/20 p-8 rounded-3xl text-center space-y-4 max-w-lg mx-auto shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-950/40 text-emerald-400 border border-emerald-500/30 mb-2 shadow-inner">
           <CheckCircle2 className="w-8 h-8" />
         </div>
-        <h3 className="text-xl font-bold text-gray-800">Pesan Terkirim!</h3>
-        <p className="text-sm text-gray-500 leading-relaxed">
+        <h3 className="text-xl font-bold text-white">Pesan Terkirim!</h3>
+        <p className="text-sm text-gray-300 leading-relaxed">
           Terima kasih telah menghubungi kami. Kami akan meninjau pesan Anda dan segera menghubungi Anda kembali melalui WhatsApp atau Email.
         </p>
         <button
@@ -68,27 +68,27 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-3xl border border-gray-100 space-y-6 max-w-xl mx-auto shadow-[0_15px_40px_rgba(0,0,0,0.05)]">
+    <form onSubmit={handleSubmit} className="bg-[#0b0518]/65 p-8 rounded-3xl border border-white/10 space-y-6 max-w-xl mx-auto shadow-[0_20px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl">
       <div className="space-y-2">
-        <h3 className="text-xl font-black text-gray-800 tracking-tight">
+        <h3 className="text-xl font-black text-white tracking-tight">
           Mulai Project Anda
         </h3>
-        <p className="text-xs text-gray-500 leading-relaxed font-semibold">
+        <p className="text-xs text-gray-300 leading-relaxed font-semibold">
           Diskusikan kebutuhan website Anda, kami akan memberikan estimasi pengerjaan dan solusi terbaik.
         </p>
       </div>
 
       {status === "error" && (
-        <div className="flex items-center gap-3 p-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-xs font-semibold">
-          <AlertTriangle className="w-5 h-5 shrink-0 text-red-500" />
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-red-950/30 border border-red-500/30 text-red-200 text-xs font-semibold">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-red-400" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {/* Input Name */}
       <div className="space-y-1.5">
-        <label className="text-xs font-bold text-gray-600 flex items-center gap-1.5">
-          <User className="w-3.5 h-3.5 text-emerald-500" />
+        <label className="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+          <User className="w-3.5 h-3.5 text-emerald-400" />
           <span>Nama Lengkap <span className="text-red-500">*</span></span>
         </label>
         <input
@@ -99,15 +99,15 @@ export default function ContactForm() {
           required
           disabled={status === "loading"}
           placeholder="Masukkan nama Anda..."
-          className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all duration-200"
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/50 transition-all duration-200"
         />
       </div>
 
       {/* Email & Phone grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-gray-600 flex items-center gap-1.5">
-            <Mail className="w-3.5 h-3.5 text-sky-500" />
+          <label className="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+            <Mail className="w-3.5 h-3.5 text-sky-400" />
             <span>Email <span className="text-red-500">*</span></span>
           </label>
           <input
@@ -118,12 +118,12 @@ export default function ContactForm() {
             required
             disabled={status === "loading"}
             placeholder="nama@email.com"
-            className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all duration-200"
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/50 transition-all duration-200"
           />
         </div>
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-gray-600 flex items-center gap-1.5">
-            <Phone className="w-3.5 h-3.5 text-emerald-500" />
+          <label className="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+            <Phone className="w-3.5 h-3.5 text-emerald-400" />
             <span>Nomor WhatsApp</span>
           </label>
           <input
@@ -133,15 +133,15 @@ export default function ContactForm() {
             onChange={handleChange}
             disabled={status === "loading"}
             placeholder="081234xxxx"
-            className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all duration-200"
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/50 transition-all duration-200"
           />
         </div>
       </div>
 
       {/* Message */}
       <div className="space-y-1.5">
-        <label className="text-xs font-bold text-gray-600 flex items-center gap-1.5">
-          <MessageSquare className="w-3.5 h-3.5 text-sky-500" />
+        <label className="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+          <MessageSquare className="w-3.5 h-3.5 text-sky-400" />
           <span>Detail Kebutuhan Project <span className="text-red-500">*</span></span>
         </label>
         <textarea
@@ -152,7 +152,7 @@ export default function ContactForm() {
           required
           disabled={status === "loading"}
           placeholder="Jelaskan fitur-fitur website yang Anda inginkan, budget, atau timeline pengerjaan..."
-          className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all duration-200 resize-none"
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/50 transition-all duration-200 resize-none"
         />
       </div>
 

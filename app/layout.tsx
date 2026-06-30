@@ -35,7 +35,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}>
+    <html
+      lang="id"
+      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body className="min-h-screen flex flex-col grid-glow-background antialiased selection:bg-cyan-500/30 selection:text-white">
         <SmoothScroll>
           <Header />

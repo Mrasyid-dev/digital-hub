@@ -157,7 +157,17 @@ export default function ProductsList({ initialProducts }: ProductsListProps) {
                             ? "bg-pink-500/10 text-pink-400 border border-pink-500/25"
                             : "bg-cyan-500/10 text-cyan-400 border border-cyan-500/25"
                         }`}>
-                          {p.category}
+                          {p.category === "undangan" 
+                            ? "Undangan Online" 
+                            : p.category === "landing-page" 
+                            ? "Landing Page" 
+                            : p.category === "company-profile" 
+                            ? "Company Profile" 
+                            : p.category === "toko-online" 
+                            ? "Toko Online" 
+                            : p.category === "sistem-backoffice" 
+                            ? "Sistem & Backoffice" 
+                            : p.category}
                         </span>
                       </td>
 

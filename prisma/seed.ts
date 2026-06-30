@@ -86,7 +86,7 @@ async function main() {
       title: "SaaS & Startup Modern landing Page",
       slug: "saas-startup-modern-landing-page",
       description: "Landing page modern dengan performa ultra cepat untuk startup, bisnis lokal, maupun digital Anda. Dilengkapi dengan animasi halus dan integrasi analitik.",
-      category: "website",
+      category: "landing-page",
       price: 1250000,
       demoUrl: "https://nextjs.org", // Live demo preview link
       thumbnailUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop",
@@ -112,7 +112,7 @@ async function main() {
       title: "Cielia - Premium Salon & Hairstyling Website",
       slug: "cielia-premium-salon-hairstyling-website",
       description: "Website landing page premium untuk salon kecantikan, barbershop, maupun jasa hairstyling profesional. Menampilkan desain split-screen mewah, transisi paralaks memukau, animasi interaktif GSAP, smooth scrolling Lenis, dan integrasi feed galeri Instagram.",
-      category: "website",
+      category: "company-profile",
       price: 1500000,
       demoUrl: "https://salon-web-fnnp.vercel.app", // Live demo preview link
       thumbnailUrl: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop",
@@ -141,7 +141,7 @@ async function main() {
       title: "Strand Haven - Premium Hair Salon Landing Page",
       slug: "strand-haven-premium-hair-salon-landing-page",
       description: "Website landing page premium berorientasi estetika tinggi untuk salon kecantikan dan perawatan rambut. Dirancang dengan perpaduan warna kontras modern (dark & light sections), galeri filosofi asimetris, bagian portofolio paralaks, integrasi video preview studio, widget jam operasional interaktif berbentuk kalender, serta layout reservasi/footer yang elegan.",
-      category: "website",
+      category: "landing-page",
       price: 1350000,
       demoUrl: "https://salon-web-y5av.vercel.app",
       thumbnailUrl: "https://plus.unsplash.com/premium_photo-1705009607254-5618bb0d0c35?q=80&w=800&auto=format&fit=crop",
@@ -171,7 +171,7 @@ async function main() {
       title: "Goldex - Men's Haircut World & Barber Landing Page",
       slug: "goldex-mens-haircut-world-barber-landing-page",
       description: "Website landing page premium bernuansa retro-modern maskulin untuk barbershop dan salon pria. Dilengkapi layout asimetris panel bergaya bento grid, aksen warna neon lime yang trendi, dekorasi star burst dinamis, stat card pencapaian, fitur virtual hairstyle try-on, dan widget FAQ akordion interaktif.",
-      category: "website",
+      category: "landing-page",
       price: 1450000,
       demoUrl: "https://salon-web-guqv.vercel.app",
       thumbnailUrl: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=800&auto=format&fit=crop",
@@ -191,6 +191,37 @@ async function main() {
         "FAQ Accordion Interaktif & Terintegrasi",
         "Sidebar Widget Jam Buka & Galeri Produk",
         "Desain Responsif & Kecepatan Akses Tinggi"
+      ],
+      status: "published"
+    }
+  });
+
+  // Portacaba Coffee landing page product
+  await prisma.product.create({
+    data: {
+      title: "Portacaba - Premium Coffee & Roastery Landing Page",
+      slug: "portacaba-premium-coffee-roastery-landing-page",
+      description: "Website landing page premium dan interaktif untuk coffee shop, cafe, maupun micro-roastery. Menampilkan desain neo-brutalisme / retro-modern yang berani dengan perpaduan warna cream hangat, peach segar, dan dark espresso. Dilengkapi dengan filter menu interaktif, keranjang pemesanan (shopping cart) mengapung, formulir checkout untuk pesanan meja terintegrasi WhatsApp, polaroid image stack melayang, marquee teks berjalan, dan desain super responsif.",
+      category: "landing-page",
+      price: 1400000,
+      demoUrl: "https://restaurant-web-uuym.vercel.app/",
+      thumbnailUrl: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?q=80&w=800&auto=format&fit=crop",
+      images: [
+        "https://images.unsplash.com/photo-1507133750040-4a8f57021571?q=80&w=800&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=800&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=800&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=800&auto=format&fit=crop"
+      ],
+      features: [
+        "Desain Retro-Modern Neo-Brutalisme yang Unik & Berani",
+        "Filter Menu Interaktif Dinamis (Biji Kopi, Kopi Buah, Kopi Susu, Pastries)",
+        "Floating Cart Bar (Keranjang Belanja Mengapung) Real-time",
+        "Checkout Modal dengan Form Detail Pemesan & Catatan Tambahan",
+        "Integrasi Pemesanan WhatsApp Otomatis (Kirim Rincian Pesanan & Meja)",
+        "Polaroid Image Hover Stack Effect & Floating Animation",
+        "Dual Direction Teks Marquee Berjalan Dinamis",
+        "Desain Super Responsif di Semua Ukuran Layar (Mobile Friendly)",
+        "Optimasi Kecepatan Akses & Clean Typography (Anton & Outfit Fonts)"
       ],
       status: "published"
     }

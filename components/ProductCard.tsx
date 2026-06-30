@@ -45,7 +45,17 @@ export default function ProductCard({ product }: ProductCardProps) {
               ? "bg-gradient-to-r from-pink-500 to-amber-500 shadow-md shadow-pink-500/20" 
               : "bg-gradient-to-r from-emerald-600 to-sky-500 shadow-md shadow-emerald-500/20"
           }`}>
-            {product.category === "undangan" ? "Undangan Online" : "Website Template"}
+            {product.category === "undangan" 
+              ? "Undangan Online" 
+              : product.category === "landing-page" 
+              ? "Landing Page" 
+              : product.category === "company-profile" 
+              ? "Company Profile" 
+              : product.category === "toko-online" 
+              ? "Toko Online" 
+              : product.category === "sistem-backoffice" 
+              ? "Sistem & Backoffice" 
+              : "Website Template"}
           </span>
         </div>
       </div>

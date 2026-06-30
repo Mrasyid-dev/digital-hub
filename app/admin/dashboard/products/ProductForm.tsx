@@ -31,7 +31,7 @@ export default function ProductForm({ product }: ProductFormProps) {
     slug: product?.slug || "",
     title: product?.title || "",
     description: product?.description || "",
-    category: product?.category || "website",
+    category: product?.category || "landing-page",
     price: product?.price || 0,
     demoUrl: product?.demoUrl || "",
     thumbnailUrl: product?.thumbnailUrl || "",
@@ -388,7 +388,10 @@ export default function ProductForm({ product }: ProductFormProps) {
                 onChange={handleChange}
                 className="w-full bg-black/80 border border-white/10 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors [&>option]:bg-gray-900"
               >
-                <option value="website">Website / Landing Page</option>
+                <option value="landing-page">Landing Page</option>
+                <option value="company-profile">Company Profile</option>
+                <option value="toko-online">Toko Online</option>
+                <option value="sistem-backoffice">Sistem & Backoffice</option>
                 <option value="undangan">Undangan Online</option>
               </select>
             </div>

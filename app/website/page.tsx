@@ -6,10 +6,10 @@ import ProductCard from "@/components/ProductCard";
 export const revalidate = 60;
 
 export default async function WebsitePage() {
-  // Fetch only "website" products
+  // Fetch only non-wedding template products
   const products = await prisma.product.findMany({
     where: {
-      category: "website",
+      category: { not: "undangan" },
       status: "published",
     },
     orderBy: { createdAt: "desc" },
