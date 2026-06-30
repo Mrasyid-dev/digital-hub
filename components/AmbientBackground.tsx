@@ -27,11 +27,15 @@ export default function AmbientBackground({ type = "hero" }: AmbientBackgroundPr
   if (type === "contact") {
     return (
       <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
-        {/* 3D Pixel Voxel Midnight Nature Landscape */}
-        <VoxelLandscape mode="night" />
+        {/* 3D Pixel Voxel Landscape: Day in Light theme, Night in Dark theme */}
+        <VoxelLandscape mode={isDark ? "night" : "day"} />
         
-        {/* Deep dark overlay to ensure the contact form is highly legible */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#07030e]/45 via-[#07030e]/20 to-[#07030e]/65 pointer-events-none" />
+        {/* Color overlay to ensure the contact form is highly legible */}
+        <div className={`absolute inset-0 bg-gradient-to-b pointer-events-none ${
+          isDark 
+            ? "from-[#07030e]/45 via-[#07030e]/20 to-[#07030e]/65"
+            : "from-[#f9f9fb]/45 via-[#f9f9fb]/20 to-[#f9f9fb]/65"
+        }`} />
       </div>
     );
   }
