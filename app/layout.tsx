@@ -42,7 +42,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col grid-glow-background antialiased selection:bg-cyan-500/30 selection:text-white crt-flicker">
+      <body className="min-h-screen flex flex-col grid-glow-background antialiased selection:bg-cyan-500/30 selection:text-white crt-flicker dark-theme">
         <div className="crt-overlay" />
         <SmoothScroll>
           <Header />

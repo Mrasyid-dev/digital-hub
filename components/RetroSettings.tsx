@@ -5,23 +5,24 @@ import { Settings, X } from "lucide-react";
 
 export default function RetroSettings() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== "undefined") {
-      const storedTheme = localStorage.getItem("retro-theme");
-      return storedTheme === "dark" || !storedTheme;
-    }
-    return true;
-  });
-  const [isCrtOn, setIsCrtOn] = useState(() => {
-    if (typeof window !== "undefined") {
-      const storedCrt = localStorage.getItem("retro-crt");
-      return storedCrt !== "off";
-    }
-    return true;
-  });
+  const [isDark, setIsDark] = useState(true);
+  const [isCrtOn, setIsCrtOn] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  // Load saved preferences on mount
+  useEffect(() => {
+    setMounted(true);
+    const storedTheme = localStorage.getItem("retro-theme");
+    setIsDark(storedTheme === "dark" || !storedTheme);
+
+    const storedCrt = localStorage.getItem("retro-crt");
+    setIsCrtOn(storedCrt !== "off");
+  }, []);
 
   // Apply visual effects on preference change
   useEffect(() => {
+    if (!mounted) return;
+
     if (isDark) {
       document.body.classList.add("dark-theme");
     } else {
@@ -35,7 +36,7 @@ export default function RetroSettings() {
       document.body.classList.remove("crt-flicker");
       document.body.classList.add("crt-disabled");
     }
-  }, [isDark, isCrtOn]);
+  }, [isDark, isCrtOn, mounted]);
 
   const toggleTheme = () => {
     const nextDark = !isDark;

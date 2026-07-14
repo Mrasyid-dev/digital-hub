@@ -8,14 +8,12 @@ interface AmbientBackgroundProps {
 }
 
 export default function AmbientBackground({ type = "hero" }: AmbientBackgroundProps) {
-  const [isDark, setIsDark] = React.useState(() => {
-    if (typeof window !== "undefined") {
-      return document.body.classList.contains("dark-theme");
-    }
-    return true; // Default to dark JRPG theme
-  });
+  const [isDark, setIsDark] = React.useState(true); // Default to dark JRPG theme
 
   React.useEffect(() => {
+    // Sync theme on mount
+    setIsDark(document.body.classList.contains("dark-theme"));
+
     const observer = new MutationObserver(() => {
       setIsDark(document.body.classList.contains("dark-theme"));
     });
