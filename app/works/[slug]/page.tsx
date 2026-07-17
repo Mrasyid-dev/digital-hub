@@ -27,7 +27,7 @@ export default async function WorkDetailPage({ params, searchParams }: WorkDetai
   }
 
   const isWedding = product.category === "undangan";
-  const whatsappUrl = `https://wa.me/6281234567890?text=Halo%20DigitalHub,%20saya%20tertarik%20untuk%20membeli/memesan%20desain%20${encodeURIComponent(product.title)}%20(Slug:%20${product.slug})`;
+  const whatsappUrl = `https://wa.me/6285111232733?text=Halo%20DigitalHub,%20saya%20tertarik%20untuk%20membeli/memesan%20desain%20${encodeURIComponent(product.title)}%20(Slug:%20${product.slug})`;
 
   return (
     <div className="w-full pb-24 bg-[#f9f9fb]">

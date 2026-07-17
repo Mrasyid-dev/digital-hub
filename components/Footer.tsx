@@ -78,15 +78,15 @@ export default function Footer() {
             <ul className="space-y-3 font-mono text-xs">
               <li className="flex items-center gap-2.5 text-gray-400">
                 <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                <span>+62 812-3456-7890</span>
+                <span>+62 851-1123-2733</span>
               </li>
               <li className="flex items-center gap-2.5 text-gray-400">
                 <Mail className="w-3.5 h-3.5 text-sky-400" />
-                <span>contact@digitalhub.com</span>
+                <span>rasyidh55@gmail.com</span>
               </li>
               <li className="flex items-center gap-2.5 text-gray-400">
                 <Globe className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Yogyakarta, Indonesia</span>
+                <span>Temanggung, Jawa Tengah, Indonesia</span>
               </li>
             </ul>
           </div>

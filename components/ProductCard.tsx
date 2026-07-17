@@ -105,7 +105,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               </Link>
             ) : (
               <a
-                href={`https://wa.me/6281234567890?text=Halo%20DigitalHub,%20saya%20tertarik%20dengan%20${encodeURIComponent(product.title)}`}
+                href={`https://wa.me/6285111232733?text=Halo%20DigitalHub,%20saya%20tertarik%20dengan%20${encodeURIComponent(product.title)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-1.5 px-3 py-2 text-[8px] font-pixel bg-emerald-600 hover:bg-emerald-500 text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all uppercase"

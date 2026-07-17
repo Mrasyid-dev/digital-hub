@@ -65,7 +65,7 @@ export default function RetroSettings() {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 font-mono select-none">
+    <div className="fixed top-6 left-6 md:top-auto md:bottom-6 md:left-6 z-50 font-mono select-none">
       {/* Floating Settings Button */}
       {!isOpen && (
         <button
