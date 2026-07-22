@@ -23,24 +23,24 @@ export default function Header() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full h-16 border-b-4 border-black bg-[#0b0518]/95 backdrop-blur-md text-white flex items-center justify-between px-4 sm:px-8 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full h-20 border-b-4 border-black bg-[#0b0518]/95 backdrop-blur-md text-white flex items-center justify-between px-4 sm:px-10 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
       {/* Logo */}
       <div className="flex-shrink-0">
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-sm sm:text-base font-pixel font-bold tracking-wider text-emerald-400 group-hover:text-cyan-400 transition-colors">
+          <span className="text-base sm:text-lg font-pixel font-bold tracking-wider text-emerald-400 group-hover:text-cyan-400 transition-colors">
             DIGITAL<span className="text-cyan-400">.HUB</span>
           </span>
         </Link>
       </div>
 
-      {/* Desktop Navigation (Universal Top Nav - Jakob's Law) */}
-      <nav className="hidden md:flex items-center gap-8 font-pixel text-[10px]">
+      {/* Desktop Navigation (Enlarged for readability - Agent.md Scannability rule) */}
+      <nav className="hidden md:flex items-center gap-8 font-pixel text-xs sm:text-sm">
         {navLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
-            className={`relative px-2 py-1 transition-colors uppercase ${
-              isActive(link.href) ? "text-emerald-400 font-bold" : "text-gray-300 hover:text-white"
+            className={`relative px-3 py-1.5 transition-colors uppercase tracking-wider ${
+              isActive(link.href) ? "text-emerald-400 font-bold" : "text-gray-200 hover:text-white"
             }`}
           >
             {link.name}
@@ -56,22 +56,22 @@ export default function Header() {
       </nav>
 
       {/* Right actions */}
-      <div className="hidden md:flex items-center gap-4 font-pixel text-[9px]">
+      <div className="hidden md:flex items-center gap-5 font-pixel text-xs">
         <Link
           href="/admin/dashboard"
-          className="text-[9px] text-gray-400 hover:text-emerald-400 flex items-center gap-1 transition-colors uppercase"
+          className="text-xs text-gray-400 hover:text-emerald-400 flex items-center gap-1.5 transition-colors uppercase"
           title="Admin Panel"
         >
-          <ShieldAlert className="w-3 h-3 text-red-500" />
+          <ShieldAlert className="w-4 h-4 text-red-500" />
           <span>Admin</span>
         </Link>
         <a
           href="https://wa.me/6285111232733?text=Halo%20DigitalHub,%20saya%20tertarik%20untuk%20konsultasi%20pembuatan%20website..."
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all uppercase"
+          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all uppercase text-xs"
         >
-          <MessageSquare className="w-3.5 h-3.5" />
+          <MessageSquare className="w-4 h-4" />
           <span>Hubungi WA</span>
         </a>
       </div>

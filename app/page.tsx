@@ -617,100 +617,61 @@ export default async function HomePage() {
         </ScrollReveal>
       </section>
 
-      {/* 4.6. Verified Social Proof Section (Agent.md Section 7.2 & Modul 5) */}
+      {/* 4.6. Work Standards & Risk-Reversal Guarantees Section (Transparent Trust Building for Freelancers) */}
       <section className="bg-[#0b0518] py-20 border-y-4 border-black text-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <ScrollReveal delay={0.1}>
             <div className="text-center space-y-3 max-w-3xl mx-auto">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-950 border-2 border-emerald-400 text-emerald-400 font-pixel text-[9px] uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>BUKTI SOSIAL TERVERIFIKASI</span>
+                <span>KOMITMEN & GARANSI BEBAS RISIKO</span>
               </span>
               <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight font-title">
-                Kisah Sukses & Hasil Konversi Klien Kami
+                Jaminan Standar Kerja & Garansi Kepuasan 100%
               </h2>
               <p className="text-xs sm:text-sm text-gray-300 font-mono leading-relaxed max-w-2xl mx-auto">
-                Testimoni riil dengan hasil kuantitatif sebelum dan sesudah optimasi landing page.
+                Setiap proyek dikerjakan dengan standar kualitas CRO terbaik untuk memastikan bisnis Anda mendapatkan hasil maksimal tanpa risiko.
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Testimonial 1 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
+            {/* Guarantee 1 */}
             <ScrollReveal delay={0.15}>
-              <div className="bg-[#130b29] p-6 border-4 border-black shadow-[6px_6px_0px_0px_rgba(16,185,129,0.3)] space-y-4 relative">
-                <div className="flex items-center justify-between border-b-2 border-white/10 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-emerald-500 text-black font-pixel font-bold flex items-center justify-center border-2 border-black">
-                      BS
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-sm text-white font-title">Budi Santoso</h3>
-                      <p className="text-[10px] text-gray-400 font-mono">Owner, E-Commerce Batik Keris ID</p>
-                    </div>
-                  </div>
-                  <div className="flex text-amber-400 gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                    ))}
-                  </div>
+              <div className="bg-[#130b29] p-6 border-4 border-black shadow-[4px_4px_0px_0px_rgba(16,185,129,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-emerald-950 text-emerald-400 flex items-center justify-center border-2 border-emerald-400 font-pixel font-bold">
+                  01
                 </div>
-
-                <div className="space-y-2 font-mono">
-                  <div className="inline-block px-2 py-0.5 bg-emerald-950 border border-emerald-400 text-emerald-300 text-[9px] font-bold">
-                    HASIL: CTR Iklan Naik dari 1.2% ➔ 4.5% (Omset 3x)
-                  </div>
-                  <p className="text-xs text-gray-300 leading-relaxed italic">
-                    "Sebelumnya landing page lama kami butuh 5.5 detik untuk loading di HP. Setelah dibuat ulang oleh Digital Hub, halaman terasa sangat instan. Konversi pembeli naik 3x lipat dan iklan Meta kami jadi sangat efisien!"
-                  </p>
-                </div>
-
-                <div className="pt-2 flex items-center justify-between text-[10px] font-mono text-emerald-400">
-                  <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400" /> Terverifikasi Klien Riil</span>
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline text-gray-400 hover:text-white">
-                    <span>Lihat Bukti LinkedIn</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
+                <h3 className="text-base font-bold text-white font-title">Garansi 100% Money-Back</h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Jika hasil pengerjaan website tidak sesuai dengan spesifikasi yang disepakati, Anda berhak klaim garansi refund 100% dalam 30 hari tanpa perdebatan.
+                </p>
               </div>
             </ScrollReveal>
 
-            {/* Testimonial 2 */}
+            {/* Guarantee 2 */}
             <ScrollReveal delay={0.2}>
-              <div className="bg-[#130b29] p-6 border-4 border-black shadow-[6px_6px_0px_0px_rgba(16,185,129,0.3)] space-y-4 relative">
-                <div className="flex items-center justify-between border-b-2 border-white/10 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-sky-500 text-black font-pixel font-bold flex items-center justify-center border-2 border-black">
-                      RD
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-sm text-white font-title">Rina Dianita</h3>
-                      <p className="text-[10px] text-gray-400 font-mono">Founder, Klinik Kecantikan GlowSkin</p>
-                    </div>
-                  </div>
-                  <div className="flex text-amber-400 gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                    ))}
-                  </div>
+              <div className="bg-[#130b29] p-6 border-4 border-black shadow-[4px_4px_0px_0px_rgba(16,185,129,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-emerald-950 text-emerald-400 flex items-center justify-center border-2 border-emerald-400 font-pixel font-bold">
+                  02
                 </div>
+                <h3 className="text-base font-bold text-white font-title">Uji Coba Demo Sebelum Bayar</h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Anda bisa menguji coba seluruh template dan fitur interaktif secara langsung di situs ini untuk memastikan kualitas tampilan sebelum memesan.
+                </p>
+              </div>
+            </ScrollReveal>
 
-                <div className="space-y-2 font-mono">
-                  <div className="inline-block px-2 py-0.5 bg-sky-950 border border-sky-400 text-sky-300 text-[9px] font-bold">
-                    HASIL: Reservasi WA Naik 180% Dalam 14 Hari
-                  </div>
-                  <p className="text-xs text-gray-300 leading-relaxed italic">
-                    "Sistem penataan tombol WhatsApp melayang di mobile membuat pasien baru sangat mudah booking jadwal konsultasi. Fitur dashboard kelola mandiri membuat tim saya bisa ganti promo mingguan tanpa bantuan dev!"
-                  </p>
+            {/* Guarantee 3 */}
+            <ScrollReveal delay={0.25}>
+              <div className="bg-[#130b29] p-6 border-4 border-black shadow-[4px_4px_0px_0px_rgba(16,185,129,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-emerald-950 text-emerald-400 flex items-center justify-center border-2 border-emerald-400 font-pixel font-bold">
+                  03
                 </div>
-
-                <div className="pt-2 flex items-center justify-between text-[10px] font-mono text-emerald-400">
-                  <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400" /> Terverifikasi Klien Riil</span>
-                  <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline text-gray-400 hover:text-white">
-                    <span>Ulasan Google ★ 5.0</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
+                <h3 className="text-base font-bold text-white font-title">Gratis Maintenance 30 Hari</h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Dapatkan pendampingan teknis dan revisi gratis selama 30 hari pertama pasca-launching untuk memastikan website Anda berjalan 100% lancar di semua HP.
+                </p>
               </div>
             </ScrollReveal>
           </div>
