@@ -110,8 +110,8 @@ export default async function HomePage() {
               </ScrollReveal>
             </div>
 
-            {/* Right Column: Interactive UI Showcase Mockup Frame (Agent.md Real Product Visual Requirement) */}
-            <div className="lg:col-span-5 hidden lg:block">
+            {/* Right Column: Interactive UI Showcase Mockup Frame (Responsive on All Devices) */}
+            <div className="lg:col-span-5 block mt-6 lg:mt-0">
               <ScrollReveal delay={0.3}>
                 <div className="relative border-4 border-black bg-[#0b0518] p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-4">
                   {/* Fake Browser Window Controls */}
