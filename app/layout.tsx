@@ -1,19 +1,45 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Plus_Jakarta_Sans,
+  Pixelify_Sans,
+  Press_Start_2P,
+  Share_Tech_Mono,
+  VT323,
+} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 import RetroSettings from "@/components/RetroSettings";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const pixelifySans = Pixelify_Sans({
+  variable: "--font-pixelify",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const pressStart2P = Press_Start_2P({
+  variable: "--font-press-start",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+const shareTechMono = Share_Tech_Mono({
+  variable: "--font-share-tech",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+const vt323 = VT323({
+  variable: "--font-vt323",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -38,7 +64,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+      className={`${plusJakartaSans.variable} ${pixelifySans.variable} ${pressStart2P.variable} ${shareTechMono.variable} ${vt323.variable} scroll-smooth`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

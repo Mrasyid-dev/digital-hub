@@ -23,31 +23,31 @@ export default function Header() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-5xl h-16 border-4 border-black bg-[#0b0518] text-white flex items-center justify-between px-4 sm:px-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full h-16 border-b-4 border-black bg-[#0b0518]/95 backdrop-blur-md text-white flex items-center justify-between px-4 sm:px-8 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
       {/* Logo */}
       <div className="flex-shrink-0">
-        <Link href="/" className="flex items-center gap-1.5 group">
-          <span className="text-xs sm:text-sm font-pixel font-bold tracking-wider text-emerald-400 group-hover:text-cyan-400 transition-colors">
+        <Link href="/" className="flex items-center gap-2 group">
+          <span className="text-sm sm:text-base font-pixel font-bold tracking-wider text-emerald-400 group-hover:text-cyan-400 transition-colors">
             DIGITAL<span className="text-cyan-400">.HUB</span>
           </span>
         </Link>
       </div>
 
-      {/* Desktop Navigation */}
-      <nav className="hidden md:flex items-center gap-6 font-pixel text-[10px]">
+      {/* Desktop Navigation (Universal Top Nav - Jakob's Law) */}
+      <nav className="hidden md:flex items-center gap-8 font-pixel text-[10px]">
         {navLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
             className={`relative px-2 py-1 transition-colors uppercase ${
-              isActive(link.href) ? "text-emerald-400 font-bold" : "text-gray-400 hover:text-white"
+              isActive(link.href) ? "text-emerald-400 font-bold" : "text-gray-300 hover:text-white"
             }`}
           >
             {link.name}
             {isActive(link.href) && (
               <motion.div
                 layoutId="nav-underline"
-                className="absolute bottom-[-4px] left-0 right-0 h-1 bg-emerald-400"
+                className="absolute bottom-[-6px] left-0 right-0 h-1 bg-emerald-400"
                 transition={{ type: "spring", stiffness: 380, damping: 30 }}
               />
             )}
@@ -69,9 +69,9 @@ export default function Header() {
           href="https://wa.me/6285111232733?text=Halo%20DigitalHub,%20saya%20tertarik%20untuk%20konsultasi%20pembuatan%20website..."
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all uppercase"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all uppercase"
         >
-          <MessageSquare className="w-3 h-3" />
+          <MessageSquare className="w-3.5 h-3.5" />
           <span>Hubungi WA</span>
         </a>
       </div>
@@ -87,20 +87,21 @@ export default function Header() {
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-white focus:outline-none transition-colors border-2 border-transparent hover:border-black"
+          className="inline-flex items-center justify-center p-2 text-gray-300 hover:text-white focus:outline-none transition-colors border-2 border-transparent hover:border-black"
+          aria-label="Toggle navigation menu"
         >
           {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
-      {/* Mobile Navigation Panel (Expands UPWARDS) */}
+      {/* Mobile Navigation Panel (Expands DOWNWARDS from top header) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 15 }}
-            className="absolute bottom-20 left-0 right-0 w-full border-4 border-black p-4 space-y-3 bg-[#0b0518] text-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-pixel text-[9px]"
+            exit={{ opacity: 0, y: -15 }}
+            className="absolute top-16 left-0 right-0 w-full border-b-4 border-black p-4 space-y-3 bg-[#0b0518] text-white shadow-[0_8px_16px_rgba(0,0,0,0.8)] font-pixel text-[9px]"
           >
             <div className="space-y-1">
               {navLinks.map((link) => (
@@ -110,28 +111,34 @@ export default function Header() {
                   onClick={() => setIsOpen(false)}
                   className={`block px-4 py-2.5 transition-all uppercase ${
                     isActive(link.href)
-                      ? "bg-emerald-950/50 border-l-4 border-emerald-400 text-emerald-400"
-                      : "text-gray-500 hover:bg-white/5 hover:text-white"
+                      ? "bg-emerald-950/50 border-l-4 border-emerald-400 text-emerald-400 font-bold"
+                      : "text-gray-300 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   {link.name}
                 </Link>
               ))}
             </div>
-            <div className="pt-3 border-t-2 border-black flex flex-col gap-2">
-              <a
-                href="https://wa.me/6285111232733?text=Halo%20DigitalHub,%20saya%20tertarik%20untuk%20konsultasi%20pembuatan%20website..."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all uppercase text-[8px]"
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span>Hubungi WA</span>
-              </a>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Mobile Sticky CTA Bar (Thumb-Zone Ergonomics for high conversion - Agent.md Section 3.3) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-3 bg-[#0b0518]/95 backdrop-blur-md border-t-4 border-black flex items-center justify-between gap-3 shadow-[0_-4px_10px_rgba(0,0,0,0.5)]">
+        <div className="flex flex-col">
+          <span className="text-[9px] font-pixel text-emerald-400 font-bold uppercase">Konsultasi Gratis</span>
+          <span className="text-[8px] text-gray-300 font-mono">Respon cepat via WA</span>
+        </div>
+        <a
+          href="https://wa.me/6285111232733?text=Halo%20DigitalHub,%20saya%20tertarik%20untuk%20konsultasi%20pembuatan%20website..."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-pixel font-bold text-[9px] uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-none transition-all shrink-0"
+        >
+          <MessageSquare className="w-3.5 h-3.5" />
+          <span>Chat WA</span>
+        </a>
+      </div>
     </header>
   );
 }
