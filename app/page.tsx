@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Code, Clock } from "lucide-react";
+import { ArrowRight, Sparkles, Code, Clock, AlertTriangle, CheckCircle2, ShieldCheck, Zap, Star, ExternalLink, HelpCircle } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import ProductCard from "@/components/ProductCard";
 import ContactForm from "@/components/ContactForm";
@@ -36,69 +36,211 @@ export default async function HomePage() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-left w-full">
-          <div className="max-w-3xl space-y-6">
-            <ScrollReveal delay={0.1}>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-none bg-emerald-950/70 border-4 border-emerald-500 text-xs font-bold text-emerald-300 uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-                <span className="font-pixel text-[9px]">SYS.STATUS: PREMIUM_SHOWCASE</span>
-              </div>
-            </ScrollReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Column: Copywriting & Offer */}
+            <div className="lg:col-span-7 space-y-6">
+              <ScrollReveal delay={0.1}>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-none bg-emerald-950/80 border-2 border-emerald-400 text-xs font-bold text-emerald-300 uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                  <span className="font-pixel text-[9px]">SOLUSI WEB CONVERSION-FIRST</span>
+                </div>
+              </ScrollReveal>
 
-            <ScrollReveal delay={0.2}>
-              <h1 className="text-4xl sm:text-7xl font-bold tracking-tight text-white leading-[1.1] font-title">
-                Ubah Ide Anda Menjadi{" "}
-                <span className="text-emerald-400 text-glow-brand select-none">
-                  Website Premium
-                </span>{" "}
-                dengan Sentuhan{" "}
-                <span className="font-serif text-sky-200 select-none text-glow-brand">Magic</span>
-              </h1>
-            </ScrollReveal>
+              <ScrollReveal delay={0.2}>
+                <h1 className="text-3xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1] font-title">
+                  Website & Landing Page{" "}
+                  <span className="text-emerald-400 text-glow-brand select-none">
+                    Konversi Tinggi
+                  </span>{" "}
+                  Untuk Bisnis & UMKM
+                </h1>
+              </ScrollReveal>
 
-            <ScrollReveal delay={0.3}>
-              <p className="text-xs sm:text-sm text-gray-200 max-w-xl leading-relaxed font-mono font-medium">
-                Koleksi template landing page bisnis berkinerja tinggi, portofolio digital premium, dan custom website interaktif yang dioptimalkan untuk kecepatan dan visual memukau.
-              </p>
-            </ScrollReveal>
+              <ScrollReveal delay={0.3}>
+                <p className="text-sm sm:text-base text-gray-200 max-w-xl leading-relaxed font-mono font-normal opacity-90">
+                  Sistem rekayasa web ultra-cepat (PageSpeed Score A) yang dioptimalkan untuk melipatgandakan omset penjualan dan memperkuat kredibilitas brand Anda tanpa pusing urusan teknis.
+                </p>
+              </ScrollReveal>
 
-            <ScrollReveal delay={0.4}>
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link
-                  href="/website"
-                  className="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-pixel text-[9px] uppercase tracking-wider border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2"
-                >
-                  <span>Lihat Demo Template</span>
-                  <ArrowRight className="w-4 h-4 text-white" />
-                </Link>
-                <Link
-                  href="/custom"
-                  className="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-pixel text-[9px] uppercase tracking-wider border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
-                >
-                  Request Custom Web
-                </Link>
-              </div>
-            </ScrollReveal>
-
-            {/* Stats Badges (HUD-style boxes over 3D Voxel canvas) */}
-            <ScrollReveal delay={0.5}>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-10">
-                {[
-                  { label: "Project Selesai", val: "50+", desc: "UNDANGAN & WEBSITE" },
-                  { label: "Kecepatan PageSpeed", val: "100%", desc: "OPTIMASI EKSTRIM (A)" },
-                  { label: "Responsive", val: "AUTO", desc: "MOBILE & TABLET" },
-                  { label: "Klien Puas", val: "99.9%", desc: "REVIEW BINTANG 5" },
-                ].map((stat, idx) => (
-                  <div key={idx} className="bg-[#0b0518] p-4 border-2 border-emerald-500/50 hover:border-emerald-400 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[2px] hover:translate-x-[2px] hover:shadow-none transition-all text-center group">
-                    <span className="block text-xl font-bold text-emerald-300 tracking-tight font-pixel group-hover:text-emerald-200 transition-colors">
-                      {stat.val}
-                    </span>
-                    <span className="block text-[8px] font-bold text-white mt-2 uppercase tracking-wide font-pixel">{stat.label}</span>
-                    <span className="block text-[8px] text-gray-400 mt-1 font-mono">{stat.desc}</span>
+              <ScrollReveal delay={0.4}>
+                <div className="space-y-3 pt-2">
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Link
+                      href="/website"
+                      className="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-pixel text-[9.5px] font-bold uppercase tracking-wider border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2"
+                    >
+                      <span>Lihat Demo Template</span>
+                      <ArrowRight className="w-4 h-4 text-black" />
+                    </Link>
+                    <Link
+                      href="/custom"
+                      className="px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-black font-pixel text-[9.5px] font-bold uppercase tracking-wider border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
+                    >
+                      Konsultasi Custom Web
+                    </Link>
                   </div>
-                ))}
+                  
+                  {/* FUDs Reduction (Agent.md Section 3.1) */}
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-gray-300 font-mono pt-1">
+                    <span className="flex items-center gap-1"><span className="text-emerald-400 font-bold">✓</span> Garansi Refund 100%</span>
+                    <span className="flex items-center gap-1"><span className="text-emerald-400 font-bold">✓</span> Tanpa Biaya Tersembunyi</span>
+                    <span className="flex items-center gap-1"><span className="text-emerald-400 font-bold">✓</span> Pengerjaan Kilat 1-3 Hari</span>
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              {/* Stats Badges */}
+              <ScrollReveal delay={0.5}>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6">
+                  {[
+                    { label: "Project Selesai", val: "50+", desc: "WEBSITE & UNDANGAN" },
+                    { label: "PageSpeed Score", val: "100%", desc: "OPTIMASI ULTRA (A+)" },
+                    { label: "Mobile Ergonomy", val: "100%", desc: "RESPONSIVE LAYOUT" },
+                    { label: "Garansi Puas", val: "30-HARI", desc: "100% MONEY-BACK" },
+                  ].map((stat, idx) => (
+                    <div key={idx} className="bg-[#0b0518] p-3 border-2 border-emerald-500/50 hover:border-emerald-400 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-center group">
+                      <span className="block text-lg font-bold text-emerald-300 tracking-tight font-pixel group-hover:text-emerald-200 transition-colors">
+                        {stat.val}
+                      </span>
+                      <span className="block text-[8px] font-bold text-white mt-1 uppercase tracking-wide font-pixel">{stat.label}</span>
+                      <span className="block text-[7.5px] text-gray-400 mt-0.5 font-mono">{stat.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </ScrollReveal>
+            </div>
+
+            {/* Right Column: Interactive UI Showcase Mockup Frame (Responsive on All Devices) */}
+            <div className="lg:col-span-5 block mt-6 lg:mt-0">
+              <ScrollReveal delay={0.3}>
+                <div className="relative border-4 border-black bg-[#0b0518] p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-4">
+                  {/* Fake Browser Window Controls */}
+                  <div className="flex items-center justify-between border-b-2 border-white/20 pb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-red-500 border border-black" />
+                      <div className="w-3 h-3 bg-yellow-500 border border-black" />
+                      <div className="w-3 h-3 bg-emerald-500 border border-black" />
+                    </div>
+                    <span className="text-[9px] font-mono text-emerald-400 font-bold">PREVIEW: LIVE_DEMO.UI</span>
+                    <span className="text-[8px] font-mono text-gray-400">FPS: 60</span>
+                  </div>
+
+                  {/* UI Feature Card Demonstration */}
+                  <div className="space-y-3 font-mono">
+                    <div className="bg-emerald-950/40 p-3 border-2 border-emerald-500/50">
+                      <div className="flex items-center justify-between text-xs text-white font-bold font-pixel mb-1">
+                        <span>⚡ Page Load Speed</span>
+                        <span className="text-emerald-400">0.4 Seconds</span>
+                      </div>
+                      <div className="w-full bg-black h-2 border border-black overflow-hidden">
+                        <div className="bg-emerald-400 h-full w-[98%]" />
+                      </div>
+                    </div>
+
+                    <div className="bg-white/5 p-3 border-2 border-white/20 space-y-2">
+                      <div className="flex items-center justify-between text-xs text-white">
+                        <span className="font-bold text-sky-300">🎯 Conversion Rate (CTR)</span>
+                        <span className="font-pixel text-[10px] text-amber-300">+42% Boost</span>
+                      </div>
+                      <p className="text-[10px] text-gray-300 leading-relaxed">
+                        Layout dioptimalkan mengikuti pola visual Z-Pattern dan penempatan CTA multi-titik yang mudah dijangkau.
+                      </p>
+                    </div>
+
+                    <div className="bg-emerald-500 text-black p-3 border-2 border-black font-bold font-pixel text-[9px] text-center uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                      🚀 Siap Dipublikasikan Dalam 3 Hari
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 1.5. PAS (Problem - Agitate - Solve) Section (Agent.md Section 4.2 & Modul 2) */}
+      <section className="bg-[#0f0821] border-y-4 border-black py-20 px-4 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <ScrollReveal delay={0.1}>
+            <div className="text-center space-y-3 max-w-3xl mx-auto">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-red-950/80 border-2 border-red-500 text-red-400 font-pixel text-[9px] uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <AlertTriangle className="w-3.5 h-3.5 text-red-400 animate-bounce" />
+                <span>IDENTIFIKASI MASALAH BISNIS</span>
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight font-title">
+                Apakah Website Anda Membakar Anggaran Iklan Tanpa Menghasilkan Sales?
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-300 font-mono leading-relaxed max-w-2xl mx-auto">
+                Banyak pemilik bisnis kehilangan 80% calon pembeli di 5 detik pertama karena landing page yang lambat dan berantakan.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Problem 1 */}
+            <ScrollReveal delay={0.15}>
+              <div className="bg-black/60 p-6 border-4 border-red-500/60 shadow-[4px_4px_0px_0px_rgba(239,68,68,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-red-950 text-red-400 flex items-center justify-center border-2 border-red-500 font-pixel font-bold">
+                  01
+                </div>
+                <h3 className="text-base font-bold text-red-300 font-title">Bounce Rate Tinggi & HP Berantakan</h3>
+                <p className="text-xs text-gray-300 font-mono leading-relaxed">
+                  Pengunjung kabur dalam 3 detik pertama karena halaman berat, gambar patah, dan tombol tidak responsif saat dibuka di ponsel.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* Problem 2 */}
+            <ScrollReveal delay={0.2}>
+              <div className="bg-black/60 p-6 border-4 border-red-500/60 shadow-[4px_4px_0px_0px_rgba(239,68,68,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-red-950 text-red-400 flex items-center justify-center border-2 border-red-500 font-pixel font-bold">
+                  02
+                </div>
+                <h3 className="text-base font-bold text-red-300 font-title">Anggaran Google & Meta Ads Terbuang</h3>
+                <p className="text-xs text-gray-300 font-mono leading-relaxed">
+                  Iklan menghasilkan banyak klik mahal, namun tidak ada leads yang masuk karena penawaran ambigu dan tombol CTA tidak terlihat.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* Problem 3 */}
+            <ScrollReveal delay={0.25}>
+              <div className="bg-black/60 p-6 border-4 border-red-500/60 shadow-[4px_4px_0px_0px_rgba(239,68,68,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-red-950 text-red-400 flex items-center justify-center border-2 border-red-500 font-pixel font-bold">
+                  03
+                </div>
+                <h3 className="text-base font-bold text-red-300 font-title">Ketergantungan Agensi / Dev Mahal</h3>
+                <p className="text-xs text-gray-300 font-mono leading-relaxed">
+                  Menunggu berminggu-minggu dan membayar biaya mahal hanya untuk mengubah harga produk, banner promo, atau nomor WhatsApp.
+                </p>
               </div>
             </ScrollReveal>
           </div>
+
+          {/* Solve Box */}
+          <ScrollReveal delay={0.3}>
+            <div className="bg-emerald-950/70 border-4 border-emerald-500 p-6 sm:p-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] text-center space-y-4 max-w-4xl mx-auto">
+              <span className="text-emerald-400 font-pixel text-[10px] uppercase tracking-widest font-bold flex items-center justify-center gap-2">
+                <Zap className="w-4 h-4 text-emerald-400 fill-current" />
+                <span>SOLUSI DIGITAL HUB (CONVERSION-ENGINE)</span>
+              </span>
+              <h3 className="text-lg sm:text-2xl font-bold text-white font-title">
+                Kami Merekayasa Landing Page Konversi Tinggi — Siap Mengudara Dalam 1-3 Hari
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-200 font-mono leading-relaxed">
+                Dioptimalkan secara ekstrim untuk kecepatan (PageSpeed Score A+), kemudahan navigasi mobile, serta integrasi WhatsApp & Payment Gateway langsung. Anda memegang kendali penuh tanpa biaya bulanan tersembunyi.
+              </p>
+              <div className="pt-2">
+                <Link
+                  href="#contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-pixel text-[9px] font-bold uppercase border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all"
+                >
+                  <span>Konsultasikan Masalah Web Anda Sekarang</span>
+                  <ArrowRight className="w-4 h-4 text-black" />
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -294,172 +436,172 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Landing Page */}
           <ScrollReveal delay={0.15}>
-            <div className="bg-white pixel-border p-6 flex flex-col justify-between h-full hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150">
+            <div className="bg-white pixel-border p-6 flex flex-col justify-between h-full hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150 border-t-4 border-t-emerald-500">
               <div className="space-y-4">
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold text-gray-800 font-title">Landing Page</h3>
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider font-pixel">PROMOSI PRODUK</p>
+                  <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider font-pixel">PROMOSI PRODUK & LEADS</p>
                 </div>
                 <div className="text-xl font-bold text-emerald-600 tracking-tight py-2 border-y-2 border-black font-pixel">
                   Rp 900rb - 2.5jt
                 </div>
-                <ul className="space-y-2 text-xs text-gray-500 font-medium pt-2 font-mono">
+                <ul className="space-y-2.5 text-xs text-gray-700 font-medium pt-2 font-mono">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>1 Halaman Fokus Utama</span>
+                    <span className="text-emerald-600 font-bold">&gt;</span>
+                    <span><strong>1 Halaman Fokus Konversi</strong> (+40% CTR iklan)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Desain Ultra-Responsive</span>
+                    <span className="text-emerald-600 font-bold">&gt;</span>
+                    <span><strong>Layout Responsif</strong> di 100% Layar Ponsel</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Integrasi Direct Chat WA</span>
+                    <span className="text-emerald-600 font-bold">&gt;</span>
+                    <span><strong>Direct Chat WA</strong> (Pembeli Langsung Masuk WA)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Formulir Leads Collection</span>
+                    <span className="text-emerald-600 font-bold">&gt;</span>
+                    <span><strong>Automatic Leads Collection Form</strong></span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Optimasi PageSpeed A+</span>
+                    <span className="text-emerald-600 font-bold">&gt;</span>
+                    <span><strong>PageSpeed Score A+</strong> (LCP &lt; 1.5 Detik)</span>
                   </li>
                 </ul>
               </div>
               <a
                 href="#contact"
-                className="mt-8 w-full py-2.5 bg-gray-800 hover:bg-emerald-600 text-white font-pixel text-[9px] uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all text-center block"
+                className="mt-8 w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-pixel text-[9px] font-bold uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all text-center block"
               >
-                Konsultasikan Project
+                Pilih Paket Landing Page
               </a>
             </div>
           </ScrollReveal>
 
           {/* Company Profile */}
           <ScrollReveal delay={0.2}>
-            <div className="bg-white pixel-border p-6 flex flex-col justify-between h-full hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150">
+            <div className="bg-white pixel-border p-6 flex flex-col justify-between h-full hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150 border-t-4 border-t-sky-500">
               <div className="space-y-4">
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold text-gray-800 font-title">Company Profile</h3>
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider font-pixel">KREDIBILITAS BISNIS</p>
+                  <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider font-pixel">KREDIBILITAS BISNIS</p>
                 </div>
-                <div className="text-xl font-bold text-emerald-600 tracking-tight py-2 border-y-2 border-black font-pixel">
+                <div className="text-xl font-bold text-sky-600 tracking-tight py-2 border-y-2 border-black font-pixel">
                   Rp 1.8jt - 5jt
                 </div>
-                <ul className="space-y-2 text-xs text-gray-500 font-medium pt-2 font-mono">
+                <ul className="space-y-2.5 text-xs text-gray-700 font-medium pt-2 font-mono">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Struktur Multi-Halaman</span>
+                    <span className="text-sky-600 font-bold">&gt;</span>
+                    <span><strong>Multi-Halaman Kredibilitas</strong> (Investor & Klien)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>CMS Artikel & Layanan</span>
+                    <span className="text-sky-600 font-bold">&gt;</span>
+                    <span><strong>Dashboard CMS Mandiri</strong> (Edit Tanpa Bayar Dev)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Edit Konten Sendiri</span>
+                    <span className="text-sky-600 font-bold">&gt;</span>
+                    <span><strong>Manajemen Artikel & Layanan</strong> Terstruktur</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Google Maps & Social Link</span>
+                    <span className="text-sky-600 font-bold">&gt;</span>
+                    <span><strong>Google Maps & Social Links</strong> Integrasi</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Basic SEO Setup</span>
+                    <span className="text-sky-600 font-bold">&gt;</span>
+                    <span><strong>SEO Architecture</strong> (Mudah Ranking Google)</span>
                   </li>
                 </ul>
               </div>
               <a
                 href="#contact"
-                className="mt-8 w-full py-2.5 bg-gray-800 hover:bg-emerald-600 text-white font-pixel text-[9px] uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all text-center block"
+                className="mt-8 w-full py-3 bg-sky-500 hover:bg-sky-400 text-black font-pixel text-[9px] font-bold uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all text-center block"
               >
-                Konsultasikan Project
+                Pilih Company Profile
               </a>
             </div>
           </ScrollReveal>
 
           {/* E-Commerce */}
           <ScrollReveal delay={0.25}>
-            <div className="bg-white pixel-border p-6 flex flex-col justify-between h-full hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150">
+            <div className="bg-white pixel-border p-6 flex flex-col justify-between h-full hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150 border-t-4 border-t-amber-500">
               <div className="space-y-4">
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold text-gray-800 font-title">Toko Online</h3>
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider font-pixel">OTOMATISASI PENJUALAN</p>
+                  <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider font-pixel">OTOMATISASI PENJUALAN</p>
                 </div>
-                <div className="text-xl font-bold text-emerald-600 tracking-tight py-2 border-y-2 border-black font-pixel">
+                <div className="text-xl font-bold text-amber-600 tracking-tight py-2 border-y-2 border-black font-pixel">
                   Rp 3jt - 10jt
                 </div>
-                <ul className="space-y-2 text-xs text-gray-500 font-medium pt-2 font-mono">
+                <ul className="space-y-2.5 text-xs text-gray-700 font-medium pt-2 font-mono">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Sistem Keranjang Belanja</span>
+                    <span className="text-amber-600 font-bold">&gt;</span>
+                    <span><strong>Keranjang Belanja Instant</strong> & Katalog Produk</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Katalog & Manajemen Stok</span>
+                    <span className="text-amber-600 font-bold">&gt;</span>
+                    <span><strong>Manajemen Stok & Kategori</strong> Real-Time</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Hitung Ongkir Otomatis</span>
+                    <span className="text-amber-600 font-bold">&gt;</span>
+                    <span><strong>Cek Ongkir Otomatis</strong> Langsung ke Alamat</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Payment Gateway (QRIS)</span>
+                    <span className="text-amber-600 font-bold">&gt;</span>
+                    <span><strong>Payment Gateway QRIS</strong> & Bank Transfer</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Halaman Kelola Pesanan</span>
+                    <span className="text-amber-600 font-bold">&gt;</span>
+                    <span><strong>Dashboard Laporan Pesanan</strong> Lengkap</span>
                   </li>
                 </ul>
               </div>
               <a
                 href="#contact"
-                className="mt-8 w-full py-2.5 bg-gray-800 hover:bg-emerald-600 text-white font-pixel text-[9px] uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all text-center block"
+                className="mt-8 w-full py-3 bg-amber-500 hover:bg-amber-400 text-black font-pixel text-[9px] font-bold uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all text-center block"
               >
-                Konsultasikan Project
+                Pilih Toko Online
               </a>
             </div>
           </ScrollReveal>
 
           {/* Custom Web & Backoffice */}
           <ScrollReveal delay={0.3}>
-            <div className="bg-white pixel-border p-6 flex flex-col justify-between h-full hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150">
+            <div className="bg-white pixel-border p-6 flex flex-col justify-between h-full hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150 border-t-4 border-t-purple-500">
               <div className="space-y-4">
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold text-gray-800 font-title">Sistem & Backoffice</h3>
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider font-pixel">APLIKASI OPERASIONAL</p>
+                  <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider font-pixel">APLIKASI OPERASIONAL</p>
                 </div>
-                <div className="text-xl font-bold text-emerald-600 tracking-tight py-2 border-y-2 border-black font-pixel">
+                <div className="text-xl font-bold text-purple-600 tracking-tight py-2 border-y-2 border-black font-pixel">
                   Mulai Rp 5jt
                 </div>
-                <ul className="space-y-2 text-xs text-gray-500 font-medium pt-2 font-mono">
+                <ul className="space-y-2.5 text-xs text-gray-700 font-medium pt-2 font-mono">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Multi-user & Role Access</span>
+                    <span className="text-purple-600 font-bold">&gt;</span>
+                    <span><strong>Multi-user & Role Access</strong> Staf / Admin</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Dashboard Panel Admin</span>
+                    <span className="text-purple-600 font-bold">&gt;</span>
+                    <span><strong>Dashboard Analytics & Operational Panel</strong></span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Custom Logic & Database</span>
+                    <span className="text-purple-600 font-bold">&gt;</span>
+                    <span><strong>Logika Bisnis & Database Kustom</strong></span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Ekspor Laporan (PDF/Excel)</span>
+                    <span className="text-purple-600 font-bold">&gt;</span>
+                    <span><strong>Ekspor Laporan Otomatis</strong> (PDF & Excel)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>Integrasi API Pihak Ketiga</span>
+                    <span className="text-purple-600 font-bold">&gt;</span>
+                    <span><strong>Integrasi API Pihak Ketiga</strong> & Cloud API</span>
                   </li>
                 </ul>
               </div>
               <a
                 href="#contact"
-                className="mt-8 w-full py-2.5 bg-gray-800 hover:bg-emerald-600 text-white font-pixel text-[9px] uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all text-center block"
+                className="mt-8 w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-pixel text-[9px] font-bold uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none transition-all text-center block"
               >
-                Konsultasikan Project
+                Konsultasi Sistem Custom
               </a>
             </div>
           </ScrollReveal>
@@ -467,12 +609,120 @@ export default async function HomePage() {
 
         {/* Educational Disclaimer */}
         <ScrollReveal delay={0.35}>
-          <div className="mt-12 p-4 bg-gray-100 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-left max-w-4xl mx-auto font-mono">
-            <p className="text-[11px] font-semibold text-gray-500 leading-relaxed">
-              <span className="text-emerald-600 font-bold font-pixel text-[8px]">Catatan Edukasi:</span> Informasi rentang harga dan spesifikasi fitur di atas adalah gambaran umum (*general outline*) untuk membantu estimasi budget awal Anda. Spesifikasi teknis final, modul tambahan, dan biaya akhir akan disesuaikan secara transparan setelah melalui diskusi detail mengenai kebutuhan proyek Anda.
+          <div className="mt-12 p-4 bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-left max-w-4xl mx-auto font-mono">
+            <p className="text-[11px] font-medium text-gray-600 leading-relaxed">
+              <span className="text-emerald-600 font-bold font-pixel text-[8px] uppercase">Catatan Transparansi:</span> Informasi rentang harga di atas adalah gambaran estimasi awal. Spesifikasi teknis final, modul tambahan, serta garansi hasil akan dirinci secara transparan dalam penawaran tertulis sebelum pengerjaan dimulai.
             </p>
           </div>
         </ScrollReveal>
+      </section>
+
+      {/* 4.6. Work Standards & Risk-Reversal Guarantees Section (Transparent Trust Building for Freelancers) */}
+      <section className="bg-[#0b0518] py-20 border-y-4 border-black text-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <ScrollReveal delay={0.1}>
+            <div className="text-center space-y-3 max-w-3xl mx-auto">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-950 border-2 border-emerald-400 text-emerald-400 font-pixel text-[9px] uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>KOMITMEN & GARANSI BEBAS RISIKO</span>
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight font-title">
+                Jaminan Standar Kerja & Garansi Kepuasan 100%
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-300 font-mono leading-relaxed max-w-2xl mx-auto">
+                Setiap proyek dikerjakan dengan standar kualitas CRO terbaik untuk memastikan bisnis Anda mendapatkan hasil maksimal tanpa risiko.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
+            {/* Guarantee 1 */}
+            <ScrollReveal delay={0.15}>
+              <div className="bg-[#130b29] p-6 border-4 border-black shadow-[4px_4px_0px_0px_rgba(16,185,129,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-emerald-950 text-emerald-400 flex items-center justify-center border-2 border-emerald-400 font-pixel font-bold">
+                  01
+                </div>
+                <h3 className="text-base font-bold text-white font-title">Garansi 100% Money-Back</h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Jika hasil pengerjaan website tidak sesuai dengan spesifikasi yang disepakati, Anda berhak klaim garansi refund 100% dalam 30 hari tanpa perdebatan.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* Guarantee 2 */}
+            <ScrollReveal delay={0.2}>
+              <div className="bg-[#130b29] p-6 border-4 border-black shadow-[4px_4px_0px_0px_rgba(16,185,129,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-emerald-950 text-emerald-400 flex items-center justify-center border-2 border-emerald-400 font-pixel font-bold">
+                  02
+                </div>
+                <h3 className="text-base font-bold text-white font-title">Uji Coba Demo Sebelum Bayar</h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Anda bisa menguji coba seluruh template dan fitur interaktif secara langsung di situs ini untuk memastikan kualitas tampilan sebelum memesan.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* Guarantee 3 */}
+            <ScrollReveal delay={0.25}>
+              <div className="bg-[#130b29] p-6 border-4 border-black shadow-[4px_4px_0px_0px_rgba(16,185,129,0.3)] space-y-3 h-full">
+                <div className="w-10 h-10 bg-emerald-950 text-emerald-400 flex items-center justify-center border-2 border-emerald-400 font-pixel font-bold">
+                  03
+                </div>
+                <h3 className="text-base font-bold text-white font-title">Gratis Maintenance 30 Hari</h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Dapatkan pendampingan teknis dan revisi gratis selama 30 hari pertama pasca-launching untuk memastikan website Anda berjalan 100% lancar di semua HP.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 4.7. FAQ & Objection Handling Section (Agent.md Section 3.3 & Modul 1) */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-[#f9f9fb]">
+        <ScrollReveal delay={0.1}>
+          <div className="text-center space-y-3 mb-12">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border-2 border-black text-amber-700 font-pixel text-[9px] uppercase tracking-wider shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <HelpCircle className="w-3.5 h-3.5 text-amber-600" />
+              <span>PENANGANAN KEBERATAN (FAQ)</span>
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 tracking-tight font-title">
+              Pertanyaan yang Sering Diajukan
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-500 font-mono max-w-lg mx-auto">
+              Jawaban transparan untuk menghilangkan keraguan Anda sebelum memulai proyek.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="space-y-4 font-mono">
+          {[
+            {
+              q: "Berapa lama proses pembuatan dan apakah saya bisa mengedit sendiri isinya nanti?",
+              a: "Website siap mengudara dalam 1-3 hari kerja setelah materi diterima. Anda mendapatkan akses dashboard CMS penuh untuk mengubah teks, harga, banner, dan foto produk kapan saja secara mandiri tanpa biaya tambahan."
+            },
+            {
+              q: "Bagaimana jika tampilan hasil akhir tidak sesuai atau saya merasa tidak puas?",
+              a: "Kami memberikan Garansi 100% Pengembalian Dana (Money-Back Guarantee) dalam 30 hari pertama serta garansi revisi sampai tampilan sempurna sesuai kesepakatan spesifikasi awal."
+            },
+            {
+              q: "Apakah ada biaya langganan bulanan atau biaya tersembunyi setelah dipublikasikan?",
+              a: "Tidak ada biaya tersembunyi. Semua paket sudah mencakup lisensi penuh, domain .com, serta hosting ultra-cepat gratis untuk tahun pertama tanpa ikatan kontrak membebani."
+            }
+          ].map((faq, idx) => (
+            <ScrollReveal key={idx} delay={0.1 * idx}>
+              <div className="bg-white p-6 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-2">
+                <h3 className="font-bold text-sm sm:text-base text-gray-800 font-title flex items-start gap-2">
+                  <span className="text-emerald-600 font-pixel text-xs">&gt;</span>
+                  <span>{faq.q}</span>
+                </h3>
+                <p className="text-xs text-gray-600 leading-relaxed pl-5 font-mono">
+                  {faq.a}
+                </p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
       </section>
 
       {/* 5. Contact Section */}

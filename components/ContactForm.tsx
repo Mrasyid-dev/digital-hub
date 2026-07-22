@@ -156,21 +156,28 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* Submit Button */}
-      <button
-        type="submit"
-        disabled={status === "loading"}
-        className="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-pixel text-[10px] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all uppercase disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {status === "loading" ? (
-          <span>MENGIRIM...</span>
-        ) : (
-          <>
-            <span>KIRIM REQUEST</span>
-            <Send className="w-4 h-4" />
-          </>
-        )}
-      </button>
+      {/* Submit Button & FUDs Reduction */}
+      <div className="space-y-2">
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-pixel font-bold text-[10.5px] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all uppercase disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {status === "loading" ? (
+            <span>MENGIRIM REQUEST...</span>
+          ) : (
+            <>
+              <span>KIRIM REQUEST KONSULTASI</span>
+              <Send className="w-4 h-4 text-black" />
+            </>
+          )}
+        </button>
+        <p className="text-[10px] text-gray-400 font-mono text-center flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-1">
+          <span>🔒 Privasi Terjamin (Enkripsi SSL)</span>
+          <span>⚡ Respon Cepat &lt; 2 Jam</span>
+          <span>✓ Tanpa Komitmen Pembelian</span>
+        </p>
+      </div>
     </form>
   );
 }
