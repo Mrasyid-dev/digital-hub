@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, MessageSquare, Check, CreditCard } from "lucide-react";
@@ -11,6 +12,38 @@ interface WorkDetailPageProps {
 }
 
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: WorkDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const product = await prisma.product.findUnique({
+      where: { slug },
+    });
+
+    if (!product) {
+      return {
+        title: "Karya Tidak Ditemukan",
+      };
+    }
+
+    return {
+      title: `${product.title} - Template & Desain`,
+      description: product.description ? product.description.slice(0, 160) : "Detail template dan portofolio desain web Digital Hub.",
+      alternates: {
+        canonical: `/works/${product.slug}`,
+      },
+      openGraph: {
+        title: `${product.title} | Digital Hub`,
+        description: product.description ? product.description.slice(0, 160) : "Detail template dan portofolio desain web Digital Hub.",
+        images: product.thumbnailUrl ? [{ url: product.thumbnailUrl }] : [],
+      },
+    };
+  } catch {
+    return {
+      title: "Detail Desain & Template",
+    };
+  }
+}
 
 export default async function WorkDetailPage({ params, searchParams }: WorkDetailPageProps) {
   const { slug } = await params;

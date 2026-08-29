@@ -1,7 +1,17 @@
 import React from "react";
+import type { Metadata } from "next";
 import { Laptop, Cpu } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import ProductCard from "@/components/ProductCard";
+
+export const metadata: Metadata = {
+  title: "Galeri Template Website & Landing Page Bisnis",
+  description:
+    "Katalog template website siap pakai, landing page konversi tinggi untuk UMKM, company profile, e-commerce, dan portfolio modern berbasis Next.js.",
+  alternates: {
+    canonical: "/website",
+  },
+};
 
 export const revalidate = 60;
 
