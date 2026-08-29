@@ -41,6 +41,7 @@ Setiap output (baik berupa audit, wireframe, copy, maupun kode UI) wajib mematuh
 6. **Aksesibilitas Kontras WCAG AA**: Rasio kontras minimal `4.5:1` untuk teks normal (<18pt) dan `3:1` untuk teks besar (≥18pt atau bold).
 7. **Social Proof Transparan & Terverifikasi**: Dilarang menggunakan lencana "As Seen On" generik tanpa bukti. Wajib menyertakan nama asli, foto riil, jabatan, dan tautan platform terverifikasi (LinkedIn, Google Reviews, Trustpilot, G2).
 8. **Kesesuaian Konten (Content Congruence)**: Pesan pada materi iklan (traffic source) wajib cocok 1:1 secara media, informasi, dan identitas brand dengan halaman pendarat (*landing page*).
+9. **Dilarang Menggunakan Native Browser Dialog**: DILARANG MENGGUNAKAN `window.alert()`, `window.confirm()`, DAN `window.prompt()` NATIVE BROWSER. Seluruh umpan balik interaksi pengguna wajib menggunakan Toast UI Component (non-blocking) atau Custom Actionable Modal Dialog.
 
 ---
 
@@ -226,6 +227,15 @@ $$\text{Sistem Warna} = 60\% \text{ Latar Belakang (Dominan)} + 30\% \text{ Stru
    * Layered drop-shadows yang halus.
    * Overlay tekstur mikro (*noise/grain*) 1-2% untuk memberikan nuansa organik premium.
    * Efek kaca buram (*glassmorphism / backdrop-blur*) tipis (tidak boleh bersaing dengan *Star of the Show*).
+
+### 6.5. Standar Hirarki Umpan Balik UI/UX (Feedback UX Hierarchy)
+
+| Hirarki Level | Komponen UI | Skenario Penggunaan | Aturan & Karakteristik UX |
+| :--- | :--- | :--- | :--- |
+| **Level 1: Auto-Dismissing Toast** | `Toast` (Top-Right / Bottom-Center) | Sukses simpan/update, transaksi kasir selesai, item ditambah ke keranjang. | **Asynchronous & Non-Blocking**. Otomatis hilang dalam 2.5–3.5 detik. Warna aksen disesuaikan (Emerald untuk Sukses, Rose untuk Error). Kasir dapat melanjut transaksi tanpa hambatan (*zero friction*). |
+| **Level 2: Inline Field Error** | `Typography Error` (Teks Merah 12px-14px) | Validasi kesalahan input form (misal: *"Username minimal 4 karakter"*). | Ditampilkan langsung tepat di bawah input field yang bermasalah. **Dilarang** menggunakan Toast atau Popup untuk kesalahan input form. |
+| **Level 3: Custom Actionable Modal** | `Modal Dialog` (Tailwind Overlay + Shadow) | Konfirmasi tindakan permanen/destruktif (misal: *"Hapus Kategori/Produk"*). | Membuka dialog modal custom dengan 2 pilihan tegas: Tombol Batal (netral) & Tombol Hapus (merah). **Dilarang keras menggunakan `window.confirm()` native browser**. |
+| **Level 4: Optimistic UI Update** | `State Update` (Sebelum API response) | Penambahan item ke cart, toggle favorit/status. | Memperbarui tampilan secara instan sebelum respon server selesai untuk mempercepat persepsi performa. Wajib menyediakan *rollback* dan Toast error jika request server gagal. |
 
 ---
 

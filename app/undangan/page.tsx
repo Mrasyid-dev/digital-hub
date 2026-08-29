@@ -1,7 +1,17 @@
 import React from "react";
+import type { Metadata } from "next";
 import { Sparkles, Calendar } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import ProductCard from "@/components/ProductCard";
+
+export const metadata: Metadata = {
+  title: "Galeri Template Undangan Digital Pernikahan Website",
+  description:
+    "Koleksi desain undangan pernikahan digital interaktif dengan animasi elegan, RSVP WhatsApp otomatis, Google Maps integrasi, dan galeri foto kekinian.",
+  alternates: {
+    canonical: "/undangan",
+  },
+};
 
 export const revalidate = 60;
 
