@@ -65,7 +65,7 @@ export default async function WorkDetailPage({ params, searchParams }: WorkDetai
   return (
     <div className="w-full pb-24 bg-[#f9f9fb]">
       {/* Detail Content Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12 md:pt-36">
         {/* Back Link */}
         <Link
           href={isWedding ? "/undangan" : "/website"}

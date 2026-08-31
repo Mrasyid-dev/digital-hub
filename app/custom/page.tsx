@@ -77,7 +77,7 @@ ${formData.description}
 
   if (status === "success") {
     return (
-      <div className="w-full max-w-2xl mx-auto px-4 py-20 text-center">
+      <div className="w-full max-w-2xl mx-auto px-4 pt-28 pb-20 md:pt-36 text-center">
         <div className="bg-white border border-gray-100 p-10 rounded-3xl space-y-6 shadow-[0_15px_40px_rgba(0,0,0,0.05)]">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 mb-2 shadow-inner">
             <CheckCircle2 className="w-10 h-10" />
@@ -98,7 +98,7 @@ ${formData.description}
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-[#f9f9fb]">
+    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 md:pt-36 bg-[#f9f9fb]">
       {/* Header */}
       <div className="text-center space-y-4 mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-600">
