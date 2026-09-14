@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, MessageSquare, ShieldAlert } from "lucide-react";
+import { Menu, X, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
@@ -57,14 +57,6 @@ export default function Header() {
 
       {/* Right actions */}
       <div className="hidden md:flex items-center gap-5 font-pixel text-xs">
-        <Link
-          href="/admin/dashboard"
-          className="text-xs text-gray-400 hover:text-emerald-400 flex items-center gap-1.5 transition-colors uppercase"
-          title="Admin Panel"
-        >
-          <ShieldAlert className="w-4 h-4 text-red-500" />
-          <span>Admin</span>
-        </Link>
         <a
           href="https://wa.me/6285111232733?text=Halo%20DigitalHub,%20saya%20tertarik%20untuk%20konsultasi%20pembuatan%20website..."
           target="_blank"
@@ -78,13 +70,6 @@ export default function Header() {
 
       {/* Mobile Menu Button */}
       <div className="md:hidden flex items-center gap-2">
-        <Link
-          href="/admin/dashboard"
-          className="text-gray-400 hover:text-white p-1"
-          title="Admin Panel"
-        >
-          <ShieldAlert className="w-4 h-4 text-red-500" />
-        </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="inline-flex items-center justify-center p-2 text-gray-300 hover:text-white focus:outline-none transition-colors border-2 border-transparent hover:border-black"
