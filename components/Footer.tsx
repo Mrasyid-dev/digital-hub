@@ -63,6 +63,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/undangan" className="text-gray-400 hover:text-white transition-colors">
+                  &gt; Undangan Pernikahan Digital
+                </Link>
+              </li>
+              <li>
                 <Link href="/custom" className="text-gray-400 hover:text-white transition-colors">
                   &gt; Request Custom
                 </Link>
